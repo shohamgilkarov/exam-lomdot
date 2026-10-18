@@ -25,6 +25,12 @@ button{font:inherit}
 header.top{background:var(--paper);border-bottom:1px solid var(--line)}
 header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px;flex-wrap:wrap}
 header.top img{height:44px;width:auto;max-width:100%}
+.brandmark{display:inline-flex;align-items:center;gap:10px}
+.bm-chev{display:flex;gap:3px;align-items:flex-end}
+.bm-chev i{width:7px;border-radius:2px;display:block;transform:skewY(-18deg)}
+.bm-chev i:nth-child(1){height:14px;background:var(--yellow)}.bm-chev i:nth-child(2){height:20px;background:var(--orange)}.bm-chev i:nth-child(3){height:26px;background:var(--sky)}.bm-chev i:nth-child(4){height:20px;background:var(--green)}.bm-chev i:nth-child(5){height:14px;background:var(--lime)}
+.bm-txt b{font-family:var(--f-head);font-size:16px;color:var(--blue-deep);display:block;line-height:1.15}
+.bm-txt small{font-size:14px;color:var(--muted)}
 .tag{font-family:var(--f-head);font-weight:700;font-size:14px;color:var(--blue);background:var(--mist);padding:6px 12px;border-radius:999px}
 .chev{height:6px;background:linear-gradient(90deg,var(--yellow) 0 20%,var(--orange) 20% 40%,var(--sky) 40% 60%,var(--green) 60% 80%,var(--lime) 80% 100%)}
 
@@ -34,7 +40,7 @@ header.top img{height:44px;width:auto;max-width:100%}
 h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
 .intro p{margin:10px 0 0;max-width:60ch;color:var(--muted);font-size:19px}
 .progress{min-width:240px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.progress .lbl{display:flex;justify-content:space-between;font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--blue-deep);gap:12px}
+.progress .lbl{display:flex;justify-content:space-between;font-family:var(--f-head);font-weight:700;font-size:16px;color:var(--blue-deep);gap:12px}
 .progress .track{height:10px;background:var(--mist);border-radius:5px;margin-top:8px;overflow:hidden}
 .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:5px;transition:width .4s}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
@@ -50,7 +56,7 @@ h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
 .stop{display:grid;grid-template-columns:58px 1fr;gap:10px;align-items:center;width:100%;border:0;background:none;padding:7px 0;cursor:pointer;text-align:right;color:var(--ink)}
 .stop .pin{width:58px;height:58px;border-radius:50%;background:var(--paper);border:3px solid var(--line);display:grid;place-items:center;position:relative;z-index:1;transition:border-color .2s,background .2s}
 .stop .pin svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.stop .t{font-family:var(--f-head);font-weight:800;font-size:15px;color:var(--blue);font-variant-numeric:tabular-nums}
+.stop .t{font-family:var(--f-head);font-weight:800;font-size:16px;color:var(--blue);font-variant-numeric:tabular-nums}
 .stop .n{display:block;font-family:var(--f-head);font-weight:700;font-size:17px;line-height:1.25}
 .stop:hover .pin{border-color:var(--sky)}
 .stop[aria-current="step"] .pin{border-color:var(--blue);background:var(--mist);box-shadow:0 0 0 5px rgba(0,104,189,.12)}
@@ -64,11 +70,11 @@ h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
 .chead{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:22px 26px;background:var(--mist)}
 .chead .big{font-family:var(--f-head);font-weight:900;font-size:34px;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1}
 .chead h2{font-size:26px;color:var(--blue-deep);font-weight:800}
-.chead .tool{font-family:var(--f-head);font-weight:700;font-size:13px;border-radius:6px;padding:3px 9px;background:var(--paper);color:var(--blue);white-space:nowrap}
+.chead .tool{font-family:var(--f-head);font-weight:700;font-size:14.5px;border-radius:6px;padding:3px 9px;background:var(--paper);color:var(--blue);white-space:nowrap}
 .cbody{padding:22px 26px 26px;display:grid;gap:18px}
 .situ{font-size:18.5px;background:var(--yellow-soft);border-radius:12px;padding:14px 18px}
 .situ b{font-family:var(--f-head);color:#6B4700}
-.sec h4{font-size:16px;color:var(--blue);margin-bottom:6px;letter-spacing:.02em}
+.sec h4{font-size:17px;color:var(--blue);margin-bottom:6px;letter-spacing:.02em}
 .sec p{margin:0;max-width:65ch}
 .how{list-style:none;padding:0;margin:0;display:grid;gap:8px;counter-reset:h}
 .how li{display:grid;grid-template-columns:30px 1fr;gap:10px;counter-increment:h;align-items:start}
@@ -93,8 +99,8 @@ h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
 .habits li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;background:var(--ground);border-radius:12px;padding:12px 14px;counter-increment:hb}
 .habits li::before{content:counter(hb);width:44px;height:44px;border-radius:12px;background:var(--paper);color:var(--blue);font-family:var(--f-head);font-weight:900;font-size:22px;display:grid;place-items:center;border:2px solid var(--line)}
 .habits b{font-family:var(--f-head);color:var(--blue-deep);display:block}
-.habits span{font-size:16px;color:var(--muted)}
-.foot-note{font-size:14px;color:var(--muted);margin-top:14px}
+.habits span{font-size:17px;color:var(--muted)}
+.foot-note{font-size:15.5px;color:var(--muted);margin-top:14px}
 
 
 .sky{position:relative;height:170px;border-radius:20px;overflow:hidden;margin-bottom:22px;background:linear-gradient(180deg,#9FD3F2,#EAF6FD);transition:background 1.2s ease}
@@ -222,12 +228,12 @@ h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
      situ:'המנהלת מבקשת שתתאמי פגישת היכרות עם שלושה אנשים מהצוות, לשבוע הבא.',
      what:'ליצור אירוע ביומן, להוסיף משתתפים ולשלוח הזמנה.',
      how:['ביומן לוחצים <span class="ui">יצירה</span> ובוחרים <span class="ui">אירוע</span>.','כותבים כותרת: <span class="ui">פגישת היכרות</span>, ובוחרים תאריך ושעה.','בשדה <span class="ui">משתתפים</span> מקלידים את כתובות המייל של אנשי הצוות.','לפני שמאשרים: בודקים שהמשתתפים פנויים בשעה שבחרת.','לוחצים <span class="ui">שמירה</span> ומאשרים שליחת הזמנה.'],
-     why:'הזמנה ביומן נכנסת ישר ללוח הזמנים של כולם, עם תזכורת, וחוסכת שרשרת של מיילים „מתי נוח לך?".',
+     why:'הזמנה ביומן נכנסת ישר ללוח הזמנים של כולם, עם תזכורת, וחוסכת שרשרת של מיילים ״מתי נוח לך?״.',
      tip:'הוסיפי בתיאור האירוע משפט על מטרת הפגישה. אנשים מגיעים מוכנים יותר.'},
     {t:'13:00',n:'חוזרים לעבודה',tool:'Gmail',ic:'search',
-     situ:'מישהו מזכיר לך הודעה מלפני כמה ימים בנושא „תכנית שכונת הגפן". את לא זוכרת מי שלח.',
+     situ:'מישהו מזכיר לך הודעה מלפני כמה ימים בנושא ״תכנית שכונת הגפן״. את לא זוכרת מי שלח.',
      what:'למצוא את ההודעה בעזרת החיפוש.',
-     how:['לוחצים על שורת <span class="ui">חיפוש באימייל</span> בראש המסך.','מקלידים מילה שמופיעה בהודעה, למשל <span class="ui">הגפן</span>, ולוחצים Enter.','יותר מדי תוצאות? לוחצים על סמל אפשרויות החיפוש בקצה השורה, ומסננים לפי שולח, תאריך או „יש קובץ מצורף".'],
+     how:['לוחצים על שורת <span class="ui">חיפוש באימייל</span> בראש המסך.','מקלידים מילה שמופיעה בהודעה, למשל <span class="ui">הגפן</span>, ולוחצים Enter.','יותר מדי תוצאות? לוחצים על סמל אפשרויות החיפוש בקצה השורה, ומסננים לפי שולח, תאריך או ״יש קובץ מצורף״.'],
      why:'ב-Gmail לא צריך לזכור באיזו תיקייה שמרת. מחפשים כמו בגוגל, וכל הודעה נמצאת תוך שניות.',
      tip:'אפשר לחפש גם לפי שם השולח, או לפי מילה מתוך שם הקובץ המצורף.'},
     {t:'14:00',n:'עוקבים אחר משימות',tool:'Gmail + יומן',ic:'flag',
@@ -253,7 +259,7 @@ h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
     ['לבדוק הודעות חדשות ולתעדף טיפול','בבוקר ובצהריים: מה דחוף, מה יכול לחכות.'],
     ['להשתמש בתוויות כדי לשמור על סדר','דחוף · לטיפול · לעיון. תיבה מסודרת = פחות לחץ.'],
     ['לבדוק את היומן לפני קביעת פגישות','כך לא קובעים שתי פגישות באותה שעה.'],
-    ['לוודא שהודעות חשובות נשלחו לנמענים הנכונים','מבט ב„נשלח" לפני שהולכים הביתה.'],
+    ['לוודא שהודעות חשובות נשלחו לנמענים הנכונים','מבט ב״נשלח״ לפני שהולכים הביתה.'],
     ['לבדוק משימות פתוחות ולהיערך ליום הבא','5 דקות בסוף היום חוסכות חצי שעה בבוקר.']
   ];
   const done=new Set(); let cur=0;
@@ -275,7 +281,7 @@ h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
   function tipsHTML(interactive){
     return '<article class="card tips"><div class="chead"><span class="big">16:00</span><h2>טיפים לסיום היום: 5 הרגלי עבודה נכונים</h2></div><div class="cbody"><ol class="habits">'+
       HABITS.map(h=>'<li><div><b>'+h[0]+'</b><span>'+h[1]+'</span></div></li>').join('')+
-      '</ol><p class="foot-note">כל התרחישים והשמות במדריך פיקטיביים. שמות הכפתורים נבדקו מול ממשק Gmail בעברית ומרכז העזרה של Google. פריטים שסומנו „✔ לבדוק מול המסך" עשויים להשתנות לפי גרסת הממשק והגדרות הארגון.</p></div>'+
+      '</ol><p class="foot-note">כל התרחישים והשמות במדריך פיקטיביים. שמות הכפתורים נבדקו מול ממשק Gmail בעברית ומרכז העזרה של Google. פריטים שסומנו ״✔ לבדוק מול המסך״ עשויים להשתנות לפי גרסת הממשק והגדרות הארגון.</p></div>'+
       (interactive?'<div class="cfoot"><span class="foot-note" style="margin:0" id="endMsg"></span><div class="navs"><button type="button" class="navb" id="pv">→ חזרה לתחנה האחרונה</button></div></div>':'')+'</article>';
   }
   const rail=document.getElementById('rail');

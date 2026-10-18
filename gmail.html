@@ -30,7 +30,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .bm-chev i{width:7px;border-radius:2px;display:block;transform:skewY(-18deg)}
 .bm-chev i:nth-child(1){height:14px;background:var(--yellow)}.bm-chev i:nth-child(2){height:20px;background:var(--orange)}.bm-chev i:nth-child(3){height:26px;background:var(--sky)}.bm-chev i:nth-child(4){height:20px;background:var(--green)}.bm-chev i:nth-child(5){height:14px;background:var(--lime)}
 .bm-txt b{font-family:var(--f-head);font-size:16px;color:var(--blue-deep);display:block;line-height:1.15}
-.bm-txt small{font-size:12.5px;color:var(--muted)}
+.bm-txt small{font-size:14px;color:var(--muted)}
 .tag{font-family:var(--f-head);font-weight:700;font-size:14px;color:var(--blue);background:var(--mist);padding:6px 12px;border-radius:999px}
 .chev{height:6px;background:linear-gradient(90deg,var(--yellow) 0 20%,var(--orange) 20% 40%,var(--sky) 40% 60%,var(--green) 60% 80%,var(--lime) 80% 100%)}
 
@@ -38,7 +38,7 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .stepper li{flex:1 1 110px;min-width:0}
 .stepper button{width:100%;border:0;background:none;padding:0;cursor:pointer;text-align:right;color:var(--muted)}
 .stepper .bar{display:block;height:6px;border-radius:3px;background:var(--line);margin-bottom:6px;transition:background .3s}
-.stepper .lbl{font-size:14px;font-weight:600;font-family:var(--f-head)}
+.stepper .lbl{font-size:15.5px;font-weight:600;font-family:var(--f-head)}
 .stepper li.done .bar{background:var(--green)}
 .stepper li.now .bar{background:var(--blue)}
 .stepper li.now .lbl{color:var(--blue)}
@@ -79,15 +79,15 @@ p{margin:0 0 10px;max-width:62ch}
 .taskbar{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--blue-deep);color:#fff;border-radius:12px;padding:12px 16px;margin:6px 0 14px}
 .taskbar .cnt{font-family:var(--f-head);font-weight:800;background:rgba(255,255,255,.15);border-radius:8px;padding:4px 10px;font-size:14px;white-space:nowrap}
 .taskbar .txt{font-family:var(--f-head);font-weight:700;font-size:17.5px}
-.taskbar .txt small{display:block;font-family:var(--f-body);font-weight:400;font-size:15px;opacity:.85}
+.taskbar .txt small{display:block;font-family:var(--f-body);font-weight:400;font-size:16px;opacity:.85}
 .taskbar .dots{display:flex;gap:5px}
 .taskbar .dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3);display:block;transition:background .3s}
 .taskbar .dots i.ok{background:var(--lime)}
 .taskbar .dots i.cur{background:#fff}
-.hintline{min-height:28px;font-size:15.5px;color:var(--orange);font-weight:600;margin-top:8px}
+.hintline{min-height:28px;font-size:17px;color:var(--orange);font-weight:600;margin-top:8px}
 
 /* Gmail mock */
-.gm{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--g-bg);font-family:Arial,'Assistant',sans-serif;font-size:14px;color:#1f1f1f;position:relative;user-select:none;min-height:430px}
+.gm{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--g-bg);font-family:Arial,'Assistant',sans-serif;font-size:15px;color:#1f1f1f;position:relative;user-select:none;min-height:430px}
 .gm-top{display:flex;align-items:center;gap:12px;padding:10px 14px}
 .gm-logo{font-weight:700;color:#444;font-size:19px;display:flex;align-items:center;gap:6px}
 .gm-logo i{width:22px;height:16px;display:block;border:3px solid #EA4335;border-top-color:#EA4335;border-radius:2px;position:relative}
@@ -108,7 +108,7 @@ p{margin:0 0 10px;max-width:62ch}
 .gm-lbl{padding:3px 14px;display:flex;gap:8px;align-items:center;font-size:14px;animation:in .4s}
 .gm-lbl i{width:12px;height:12px;border-radius:3px;display:block;background:#888}
 .gm-main{background:#fff;border-radius:14px;margin:0 0 10px 10px;position:relative;overflow:hidden;min-width:0}
-.gm-row{display:grid;grid-template-columns:28px 120px 1fr;gap:8px;align-items:center;padding:9px 12px;border-bottom:1px solid #EEF1F4;font-size:13.5px}
+.gm-row{display:grid;grid-template-columns:28px 130px 1fr;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid #EEF1F4;font-size:15px}
 .gm-row .who{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gm-row .subj{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#444}
 .gm-row input{width:16px;height:16px;cursor:pointer;accent-color:#0B57D0}
@@ -120,13 +120,13 @@ p{margin:0 0 10px;max-width:62ch}
 .gm-settings h4{margin:0 0 8px;font-size:20px;font-weight:400}
 .gm-tabs{display:flex;gap:16px;border-bottom:1px solid #ddd;font-size:13px;padding-bottom:6px;margin-bottom:12px;color:#444;flex-wrap:wrap}
 .gm-tabs b{color:#0B57D0;border-bottom:3px solid #0B57D0;padding-bottom:4px}
-.gm-srow{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:10px 0;border-bottom:1px solid #eee;font-size:13.5px}
+.gm-srow{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:10px 0;border-bottom:1px solid #eee;font-size:15px}
 .gm-srow > b{font-weight:700}
 .gm-srow .dim{color:#777}
 .gm-btn{border:1px solid #c4c7c5;background:#fff;border-radius:18px;padding:6px 14px;cursor:pointer;font-size:13.5px;color:#0B57D0}
 .gm-btn.solid{background:#0B57D0;color:#fff;border-color:#0B57D0}
 .gm-btn.square{border-radius:4px;color:#333;background:#f8f9fa}
-.gm-editor{border:1px solid #c4c7c5;border-radius:6px;min-height:92px;padding:8px 10px;font-size:13px;line-height:1.5;background:#fff}
+.gm-editor{border:1px solid #c4c7c5;border-radius:6px;min-height:92px;padding:8px 10px;font-size:14.5px;line-height:1.5;background:#fff}
 .gm-editor .nm{font-weight:700}
 .gm-editor .cf{color:#777;font-size:11.5px;margin-top:4px}
 .gm-select{border:1px solid #c4c7c5;border-radius:4px;padding:4px 8px;font-size:13px;background:#fff;cursor:pointer}
@@ -151,8 +151,8 @@ p{margin:0 0 10px;max-width:62ch}
 .shake{animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .sigform{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:10px 0}
-.sigform label{display:grid;gap:2px;font-size:13px;font-weight:700}
-.sigform input{border:1px solid #c4c7c5;border-radius:6px;padding:6px 8px;font-size:14px}
+.sigform label{display:grid;gap:2px;font-size:14.5px;font-weight:700}
+.sigform input{border:1px solid #c4c7c5;border-radius:6px;padding:7px 9px;font-size:15.5px}
 .done-panel{text-align:center;padding:26px 16px}
 .done-panel .big{font-size:52px;animation:bounce 1s ease}
 @keyframes bounce{0%{transform:scale(.3)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
@@ -169,7 +169,7 @@ p{margin:0 0 10px;max-width:62ch}
 .msg{background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;cursor:grab;display:grid;gap:2px;transition:border-color .15s,box-shadow .15s,transform .2s;text-align:right;color:inherit}
 .msg:hover{border-color:var(--sky);transform:translateY(-2px)}
 .msg.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,104,189,.15)}
-.msg .from{font-size:13px;color:var(--muted)}
+.msg .from{font-size:14.5px;color:var(--muted)}
 .msg .s{font-weight:700;font-size:16px}
 .msg.placed{display:none}
 .bins{display:grid;gap:12px;align-content:start}
@@ -178,7 +178,7 @@ p{margin:0 0 10px;max-width:62ch}
 .bin.hit{animation:hit .5s}
 @keyframes hit{50%{transform:scale(1.04);background:var(--green-soft)}}
 .bin h4{margin:0 0 4px;font-family:var(--f-head);font-size:17px;display:flex;align-items:center;gap:8px}
-.bin .desc{font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.bin .desc{font-size:15px;color:var(--muted);margin-bottom:6px}
 .bin .in{display:flex;flex-direction:column;gap:6px}
 .bin .in span{font-size:14px;background:var(--mist);border-radius:6px;padding:4px 8px;animation:in .3s}
 .bin.urgent h4{color:var(--orange)} .bin.todo h4{color:#8A5A00} .bin.read h4{color:var(--blue)}
@@ -360,19 +360,19 @@ p{margin:0 0 10px;max-width:62ch}
     steps:[
       {task:'לחצו על סמל ההגדרות ⚙',sub:'בפינה השמאלית העליונה של המסך',target:'gear',hint:'חפשו את גלגל השיניים למעלה.',
        view:()=>top()+'<div class="gm-body">'+side()+inbox(rows())+'</div>'},
-      {task:'לחצו על „הצגת כל ההגדרות"',sub:'ההגדרות המהירות לא מספיקות. צריך את כל ההגדרות.',target:'all',hint:'הכפתור נמצא בחלונית שנפתחה.',
+      {task:'לחצו על ״הצגת כל ההגדרות״',sub:'ההגדרות המהירות לא מספיקות. צריך את כל ההגדרות.',target:'all',hint:'הכפתור נמצא בחלונית שנפתחה.',
        view:()=>top()+'<div class="gm-body">'+side()+inbox(rows())+'</div><div class="gm-quick"><h5>הגדרות מהירות</h5><button class="gm-btn" type="button" data-t="all" style="width:100%">הצגת כל ההגדרות</button><p style="font-size:12px;color:#777;margin:10px 0 0">צפיפות · עיצוב · תיבת דואר</p></div>'},
-      {task:'גללנו לקטע „חתימה". לחצו „יצירת חתימה חדשה"',target:'newsig',hint:'הכפתור נמצא בשורת „חתימה".',
+      {task:'גללנו לקטע ״חתימה״. לחצו ״יצירת חתימה חדשה״',target:'newsig',hint:'הכפתור נמצא בשורת ״חתימה״.',
        view:()=>settings(sigRow('<div class="dim" style="margin-bottom:6px">אין חתימות</div><button class="gm-btn" type="button" data-t="newsig">+ יצירת חתימה חדשה</button>'))},
-      {task:'תנו לחתימה שם ולחצו „יצירה"',sub:'השם רק בשבילכם, למשל „חתימה ארגונית"',target:'create',hint:'כתבו שם ולחצו על הכפתור הכחול.',
+      {task:'תנו לחתימה שם ולחצו ״יצירה״',sub:'השם רק בשבילכם, למשל ״חתימה ארגונית״',target:'create',hint:'כתבו שם ולחצו על הכפתור הכחול.',
        view:()=>settings(sigRow('<div class="dim">אין חתימות</div>'))+'<div class="gm-veil"><div class="gm-dialog"><h5>השם של החתימה החדשה</h5><input id="sigName" value="חתימה ארגונית" aria-label="שם החתימה"><div class="acts"><button class="gm-btn solid" type="button" data-t="create">יצירה</button><button class="gm-btn" type="button" style="border:0">ביטול</button></div></div></div>'},
-      {task:'מלאו את הפרטים שלכם, ואז „הדבקה לחתימה"',sub:'רואים את החתימה נבנית בתיבה',target:'paste',hint:'מלאו פרטים ולחצו „הדבקה לחתימה".',
+      {task:'מלאו את הפרטים שלכם, ואז ״הדבקה לחתימה״',sub:'רואים את החתימה נבנית בתיבה',target:'paste',hint:'מלאו פרטים ולחצו ״הדבקה לחתימה״.',
        view:()=>settings(sigRow('<div class="sigform free"><label>שם<input data-k="name" value="'+esc(sig.name)+'"></label><label>תפקיד<input data-k="role" value="'+esc(sig.role)+'"></label><label>יחידה<input data-k="org" value="'+esc(sig.org)+'"></label><label>טלפון<input data-k="phone" value="'+esc(sig.phone)+'"></label></div><div class="gm-editor" id="ed">'+sigHTML()+'</div><button class="gm-btn solid" type="button" data-t="paste" style="margin-top:8px">הדבקה לחתימה ✓</button>')),
        bind:()=>{document.querySelectorAll('#gmSig .sigform input').forEach(inp=>inp.addEventListener('input',()=>{sig[inp.dataset.k]=inp.value;$('ed').innerHTML=sigHTML();}));}},
-      {task:'⚠ השלב שרבים שוכחים: בחרו את החתימה ב„ברירות מחדל לחתימה"',sub:'בלי זה, החתימה לא תופיע במיילים חדשים',target:'none',hint:'בחרו „חתימה ארגונית" ברשימה.',
+      {task:'⚠ השלב שרבים שוכחים: בחרו את החתימה ב״ברירות מחדל לחתימה״',sub:'בלי זה, החתימה לא תופיע במיילים חדשים',target:'none',hint:'בחרו ״חתימה ארגונית״ ברשימה.',
        view:()=>settings(sigRow('<div class="gm-editor">'+sigHTML()+'</div><div style="margin-top:10px;font-weight:700">ברירות מחדל לחתימה</div><label class="free" style="font-size:12.5px;display:grid;gap:3px;margin-top:4px">לשימוש בהודעות אימייל חדשות<select class="gm-select pulse" id="defSel"><option>ללא חתימה</option><option>חתימה ארגונית</option></select></label>')),
        bind:(next)=>{$('defSel').addEventListener('change',e=>{ if(e.target.value==='חתימה ארגונית'){ setTimeout(next,350);} });}},
-      {task:'אחרון! לחצו „שמירת השינויים" בתחתית הדף',target:'save',hint:'הכפתור בתחתית דף ההגדרות.',
+      {task:'אחרון! לחצו ״שמירת השינויים״ בתחתית הדף',target:'save',hint:'הכפתור בתחתית דף ההגדרות.',
        view:()=>settings(sigRow('<div class="gm-editor">'+sigHTML()+'</div><div style="margin-top:8px;font-size:12.5px">לשימוש בהודעות אימייל חדשות: <b>חתימה ארגונית</b></div>')+'<div style="display:flex;gap:8px;justify-content:center;padding:14px 0 4px"><button class="gm-btn square" type="button" data-t="save">שמירת השינויים</button><button class="gm-btn square" type="button">ביטול</button></div>')}
     ],
     finish:()=>{
@@ -386,40 +386,40 @@ p{margin:0 0 10px;max-width:62ch}
   function labelSteps(){
     const st=[];
     want.forEach((w,i)=>{
-      st.push({task:(i===0?'לחצו על + ליד „תוויות"':'שוב +, הפעם לתווית „'+w[0]+'"'),sub:i===0?'בצד ימין, מתחת לתיקיות':'',target:'plus',hint:'הפלוס נמצא ליד המילה „תוויות".',
+      st.push({task:(i===0?'לחצו על + ליד ״תוויות״':'שוב +, הפעם לתווית ״'+w[0]+'״'),sub:i===0?'בצד ימין, מתחת לתיקיות':'',target:'plus',hint:'הפלוס נמצא ליד המילה ״תוויות״.',
         view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows())+'</div>'});
-      st.push({task:'הקלידו „'+w[0]+'" ולחצו „אישור"',target:null,hint:'',
+      st.push({task:'הקלידו ״'+w[0]+'״ ולחצו ״אישור״',target:null,hint:'',
         view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows())+'</div>'+lblDialog(w[0]),
         bind:(next)=>{ const inp=$('lblIn'); inp.focus();
           const ok=()=>{ if(inp.value.trim()===w[0]){ made.push(w); next(); } else { $('lblErr').textContent='כתבו בדיוק: '+w[0]; inp.classList.add('shake'); setTimeout(()=>inp.classList.remove('shake'),400);} };
           $('lblOk').onclick=ok; inp.addEventListener('keydown',e=>{if(e.key==='Enter')ok();}); }});
     });
-    st.push({task:'עכשיו מסמנים: סמנו את ההודעה הראשונה בתיבת הסימון',sub:'„השלמת מסמכים… עד מחר" צריכה תווית דחוף',target:'check',hint:'לחצו על הריבוע בתחילת השורה הראשונה.',
+    st.push({task:'עכשיו מסמנים: סמנו את ההודעה הראשונה בתיבת הסימון',sub:'״השלמת מסמכים… עד מחר״ צריכה תווית דחוף',target:'check',hint:'לחצו על הריבוע בתחילת השורה הראשונה.',
       view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows())+'</div>'});
-    st.push({task:'לחצו על סמל התוויות 🏷️ ובחרו „דחוף"',target:null,hint:'',
+    st.push({task:'לחצו על סמל התוויות 🏷️ ובחרו ״דחוף״',target:null,hint:'',
       view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows(true))+'</div>',
       bind:(next)=>{ const box=$('gmLbl'); const ic=box.querySelector('[data-t="labelicon"]'); ic.classList.add('pulse');
         ic.onclick=(e)=>{ e.stopPropagation(); if(box.querySelector('.gm-menu'))return; const r=ic.getBoundingClientRect(), b=box.getBoundingClientRect();
           const m=document.createElement('div'); m.className='gm-menu'; m.style.top=(r.bottom-b.top+4)+'px'; m.style.left=Math.max(8,r.left-b.left)+'px';
           m.innerHTML=want.map(w=>'<button type="button" data-l="'+w[0]+'"><i style="width:12px;height:12px;border-radius:3px;display:block;background:'+w[1]+'"></i>'+w[0]+'</button>').join('');
           box.appendChild(m);
-          m.onclick=(ev)=>{ ev.stopPropagation(); const l=ev.target.closest('[data-l]'); if(!l)return; if(l.dataset.l==='דחוף'){ next(); } else { $('lHint').textContent='הודעה עם מועד של מחר צריכה „דחוף". נסו שוב.'; } };
+          m.onclick=(ev)=>{ ev.stopPropagation(); const l=ev.target.closest('[data-l]'); if(!l)return; if(l.dataset.l==='דחוף'){ next(); } else { $('lHint').textContent='הודעה עם מועד של מחר צריכה ״דחוף״. נסו שוב.'; } };
         }; }});
     return st;
   }
   // remove the label steps' own wrong-click handling for steps without target
   sim({box:'gmLbl',cnt:'lCnt',txt:'lTxt',dots:'lDots',hint:'lHint',steps:labelSteps(),
     finish:()=>{
-      $('gmLbl').innerHTML=top()+'<div class="gm-body">'+side(made)+inbox(rows(false,true))+'</div><div class="gm-toast">התווית „דחוף" נוספה לשיחה</div>';
+      $('gmLbl').innerHTML=top()+'<div class="gm-body">'+side(made)+inbox(rows(false,true))+'</div><div class="gm-toast">התווית ״דחוף״ נוספה לשיחה</div>';
       $('lTxt').innerHTML='מעולה! יש לכם 3 תוויות, וההודעה הדחופה מסומנת. ←'; $('lHint').textContent=''; burst(60);
     }});
 
   /* ---------- sort game ---------- */
   const items=[
     {id:'m1',from:'ועדה מחוזית',s:'השלמת מסמכים עד מחר ב-12:00',bin:'urgent',why:'מועד קרוב מאוד = דחוף.'},
-    {id:'m2',from:'רכזת הוועדה',s:'פרוטוקול ישיבה מס׳ 14 לידיעתך',bin:'read',why:'„לידיעתך" = קוראים, בלי פעולה.'},
+    {id:'m2',from:'רכזת הוועדה',s:'פרוטוקול ישיבה מס׳ 14 לידיעתך',bin:'read',why:'״לידיעתך״ = קוראים, בלי פעולה.'},
     {id:'m3',from:'אדריכל חיצוני',s:'בקשה לתיאום פגישה בשבועיים הקרובים',bin:'todo',why:'צריך לטפל, אבל יש זמן.'},
-    {id:'m4',from:'לשכת המנהל',s:'דרוש אישור חתום עוד היום',bin:'urgent',why:'„עוד היום" = דחוף.'},
+    {id:'m4',from:'לשכת המנהל',s:'דרוש אישור חתום עוד היום',bin:'urgent',why:'״עוד היום״ = דחוף.'},
     {id:'m5',from:'דסק מחשוב',s:'עדכון: גרסה חדשה בשבוע הבא',bin:'read',why:'עדכון לידיעה.'},
     {id:'m6',from:'מתכננת מחוזית',s:'חוות דעת לקראת הישיבה בחודש הבא',bin:'todo',why:'יש משימה, המועד רחוק.'}
   ];
