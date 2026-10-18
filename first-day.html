@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>היום הראשון שלי במינהל התכנון</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+/* Layout: a workday rail (08:00→16:00) on the start side; the selected station opens as a task card beside it. "All stations" view and print show every card in order. Single light theme by choice (printable onboarding guide). */
+:root{
+  --blue:#0068BD; --blue-deep:#0B3F73; --ink:#17283A; --muted:#566779; --line:#D5E1ED; --mist:#EEF4FA; --paper:#FFFFFF; --ground:#F5F8FB;
+  --orange:#D9481A; --orange-soft:#FFEDE5; --green:#3B7A31; --green-soft:#E8F3E1; --lime:#B3C860; --sky:#58B1DC; --yellow:#F7B923; --yellow-soft:#FFF5D6;
+  --f-head:'Heebo','Assistant',Arial,sans-serif; --f-body:'Assistant','Heebo',Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;direction:rtl;margin:0}
+h1,h2,h3,h4{font-family:var(--f-head);line-height:1.2;text-wrap:balance;margin:0}
+button{font:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{background:var(--paper);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px;flex-wrap:wrap}
+header.top img{height:44px;width:auto;max-width:100%}
+.tag{font-family:var(--f-head);font-weight:700;font-size:14px;color:var(--blue);background:var(--mist);padding:6px 12px;border-radius:999px}
+.chev{height:6px;background:linear-gradient(90deg,var(--yellow) 0 20%,var(--orange) 20% 40%,var(--sky) 40% 60%,var(--green) 60% 80%,var(--lime) 80% 100%)}
+
+.intro{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;padding-block:28px 18px}
+.intro > *{min-width:0}
+.eyebrow{font-family:var(--f-head);font-weight:700;color:var(--blue);font-size:15px;margin-bottom:6px}
+h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;color:var(--blue-deep)}
+.intro p{margin:10px 0 0;max-width:60ch;color:var(--muted);font-size:19px}
+.progress{min-width:240px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.progress .lbl{display:flex;justify-content:space-between;font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--blue-deep);gap:12px}
+.progress .track{height:10px;background:var(--mist);border-radius:5px;margin-top:8px;overflow:hidden}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:5px;transition:width .4s}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.tbtn{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 16px;font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--blue-deep);cursor:pointer}
+.tbtn[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tbtn:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+
+.day{display:grid;grid-template-columns:290px 1fr;gap:24px;align-items:start;margin-bottom:48px}
+.day > *{min-width:0}
+.rail{list-style:none;margin:0;padding:0;position:relative}
+.rail::before{content:"";position:absolute;inset-inline-start:27px;top:14px;bottom:14px;width:3px;background:var(--line);border-radius:2px}
+.rail li{position:relative}
+.stop{display:grid;grid-template-columns:58px 1fr;gap:10px;align-items:center;width:100%;border:0;background:none;padding:7px 0;cursor:pointer;text-align:right;color:var(--ink)}
+.stop .pin{width:58px;height:58px;border-radius:50%;background:var(--paper);border:3px solid var(--line);display:grid;place-items:center;position:relative;z-index:1;transition:border-color .2s,background .2s}
+.stop .pin svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stop .t{font-family:var(--f-head);font-weight:800;font-size:15px;color:var(--blue);font-variant-numeric:tabular-nums}
+.stop .n{display:block;font-family:var(--f-head);font-weight:700;font-size:17px;line-height:1.25}
+.stop:hover .pin{border-color:var(--sky)}
+.stop[aria-current="step"] .pin{border-color:var(--blue);background:var(--mist);box-shadow:0 0 0 5px rgba(0,104,189,.12)}
+.stop[aria-current="step"] .n{color:var(--blue-deep)}
+.stop.done .pin{border-color:var(--green);background:var(--green-soft)}
+.stop.done .pin svg{stroke:var(--green)}
+.stop:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:12px}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 10px 34px -20px rgba(11,63,115,.4)}
+.card + .card{margin-top:22px}
+.chead{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:22px 26px;background:var(--mist)}
+.chead .big{font-family:var(--f-head);font-weight:900;font-size:34px;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1}
+.chead h2{font-size:26px;color:var(--blue-deep);font-weight:800}
+.chead .tool{font-family:var(--f-head);font-weight:700;font-size:13px;border-radius:6px;padding:3px 9px;background:var(--paper);color:var(--blue);white-space:nowrap}
+.cbody{padding:22px 26px 26px;display:grid;gap:18px}
+.situ{font-size:18.5px;background:var(--yellow-soft);border-radius:12px;padding:14px 18px}
+.situ b{font-family:var(--f-head);color:#6B4700}
+.sec h4{font-size:16px;color:var(--blue);margin-bottom:6px;letter-spacing:.02em}
+.sec p{margin:0;max-width:65ch}
+.how{list-style:none;padding:0;margin:0;display:grid;gap:8px;counter-reset:h}
+.how li{display:grid;grid-template-columns:30px 1fr;gap:10px;counter-increment:h;align-items:start}
+.how li::before{content:counter(h);width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--f-head);font-weight:800;font-size:15px;display:grid;place-items:center}
+.ui{font-family:var(--f-head);font-weight:700;background:var(--mist);border-radius:5px;padding:0 6px;color:var(--blue-deep);white-space:nowrap}
+.verify{font-size:13px;font-weight:700;color:var(--orange);white-space:nowrap}
+.why{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;border-inline-start:4px solid var(--green);padding-inline-start:14px}
+.why b{font-family:var(--f-head);color:var(--green)}
+.tip{background:var(--ground);border-radius:12px;padding:12px 16px;font-size:16.5px}
+.tip b{font-family:var(--f-head);color:var(--blue-deep)}
+.cfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 26px;border-top:1px solid var(--line)}
+.donebtn{display:inline-flex;gap:10px;align-items:center;border:2px solid var(--green);background:var(--paper);color:var(--green);border-radius:10px;padding:10px 18px;font-family:var(--f-head);font-weight:800;cursor:pointer}
+.donebtn[aria-pressed="true"]{background:var(--green);color:#fff}
+.donebtn:focus-visible,.navb:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.navs{display:flex;gap:8px}
+.navb{border:0;background:var(--mist);color:var(--blue-deep);border-radius:10px;padding:10px 16px;font-family:var(--f-head);font-weight:700;cursor:pointer}
+.navb:disabled{opacity:.4;cursor:default}
+
+.tips .chead{background:var(--blue-deep)}
+.tips .chead h2,.tips .chead .big{color:#fff}
+.habits{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:hb}
+.habits li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;background:var(--ground);border-radius:12px;padding:12px 14px;counter-increment:hb}
+.habits li::before{content:counter(hb);width:44px;height:44px;border-radius:12px;background:var(--paper);color:var(--blue);font-family:var(--f-head);font-weight:900;font-size:22px;display:grid;place-items:center;border:2px solid var(--line)}
+.habits b{font-family:var(--f-head);color:var(--blue-deep);display:block}
+.habits span{font-size:16px;color:var(--muted)}
+.foot-note{font-size:14px;color:var(--muted);margin-top:14px}
+
+
+.sky{position:relative;height:170px;border-radius:20px;overflow:hidden;margin-bottom:22px;background:linear-gradient(180deg,#9FD3F2,#EAF6FD);transition:background 1.2s ease}
+.sky .arc{position:absolute;inset:0;width:100%;height:100%}
+.sun{position:absolute;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,#FFE27A 40%,#F7B923 70%);box-shadow:0 0 0 10px rgba(247,185,35,.25),0 0 40px 10px rgba(247,185,35,.5);transform:translate(50%,-50%);transition:right 1.2s cubic-bezier(.4,0,.2,1),top 1.2s cubic-bezier(.4,0,.2,1),background 1.2s,box-shadow 1.2s}
+.sky.eve .sun{background:radial-gradient(circle,#FFB37A 40%,#D9481A 75%);box-shadow:0 0 0 10px rgba(217,72,26,.2),0 0 40px 10px rgba(217,72,26,.35)}
+.sky.night .sun{background:radial-gradient(circle,#FFFFFF 40%,#DDE6F0 75%);box-shadow:0 0 30px 6px rgba(255,255,255,.4)}
+.cloud{position:absolute;height:22px;border-radius:20px;background:rgba(255,255,255,.85);animation:drift 26s linear infinite}
+.cloud::before{content:"";position:absolute;width:28px;height:28px;border-radius:50%;background:inherit;top:-12px;right:14px}
+.cloud.c1{width:90px;top:34px;right:-120px}
+.cloud.c2{width:64px;top:74px;right:-120px;animation-duration:38s;animation-delay:-14s}
+@keyframes drift{to{transform:translateX(calc(-100vw - 200px))}}
+.clock{position:absolute;top:14px;left:18px;font-family:var(--f-head);font-weight:900;font-size:30px;color:var(--blue-deep);background:rgba(255,255,255,.75);border-radius:12px;padding:2px 14px;font-variant-numeric:tabular-nums}
+.sky.night .clock{color:#fff;background:rgba(0,0,0,.25)}
+.ground{position:absolute;bottom:0;inset-inline:0;height:34px;background:linear-gradient(180deg,#B3C860,#8FAE45);display:flex;justify-content:space-around;align-items:flex-end;font-size:26px;line-height:1}
+.slide-in{animation:slidein .45s cubic-bezier(.3,1.2,.5,1)}
+@keyframes slidein{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+.stop.pop .pin{animation:pinpop .6s ease}
+@keyframes pinpop{40%{transform:scale(1.3)}}
+.donebtn[aria-pressed="true"]{animation:pinpop .5s}
+.how li{opacity:0;animation:fadeup .4s ease forwards}
+.how li:nth-child(2){animation-delay:.08s}.how li:nth-child(3){animation-delay:.16s}.how li:nth-child(4){animation-delay:.24s}.how li:nth-child(5){animation-delay:.32s}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.habits li{opacity:0;animation:fadeup .5s ease forwards}
+.habits li:nth-child(2){animation-delay:.12s}.habits li:nth-child(3){animation-delay:.24s}.habits li:nth-child(4){animation-delay:.36s}.habits li:nth-child(5){animation-delay:.48s}
+.stamp{display:inline-block;font-family:var(--f-head);font-weight:900;color:var(--green);border:3px solid var(--green);border-radius:10px;padding:2px 12px;transform:rotate(-8deg);animation:stamp .5s cubic-bezier(.3,1.6,.6,1)}
+@keyframes stamp{from{transform:rotate(-8deg) scale(2.2);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.allview-hidden{}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.how li,.habits li{opacity:1}}
+#allView .card{break-inside:avoid}
+@media (max-width:820px){
+  .day{grid-template-columns:1fr}
+  .intro{grid-template-columns:1fr}
+  .rail{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .rail::before{display:none}
+  .stop{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .stop .pin{width:48px;height:48px}
+  .stop .n{font-size:14px}
+  .chead{grid-template-columns:auto 1fr}
+  .chead .tool{grid-column:1/-1;justify-self:start}
+  body{font-size:17px}
+}
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:11pt}
+  .progress,.toolbar,.rail,.cfoot,#oneView{display:none!important}
+  #allView{display:block!important}
+  .day{display:block}
+  .card{box-shadow:none;break-inside:avoid}
+  header.top img{height:12mm}
+  .intro{padding-block:6mm 4mm} h1{font-size:22pt} .intro p{font-size:11pt}
+  .card+.card{margin-top:5mm}
+  .chead{padding:3mm 5mm;gap:4mm} .chead .big{font-size:18pt} .chead h2{font-size:14pt}
+  .cbody{padding:3.5mm 5mm 4mm;gap:2.5mm}
+  .situ{font-size:10.5pt;padding:2mm 3.5mm} .sec h4{font-size:10pt;margin-bottom:1mm}
+  .how{gap:1mm} .how li{grid-template-columns:6mm 1fr;gap:2mm} .how li::before{width:6mm;height:6mm;font-size:9pt}
+  .tip{font-size:10pt;padding:2mm 3.5mm} .habits li{padding:2mm 3mm} .habits li::before{width:9mm;height:9mm;font-size:13pt}
+  .habits span{font-size:10pt}
+}
+</style>
+
+<header class="top"><div class="wrap"><span class="brandmark"><span class="bm-chev" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="bm-txt"><b>שוהם גילקרוב</b><small>תוצר למבחן מטמיע/ת מערכות מידע</small></span></span><span class="tag">מדריך קליטה · Gmail ויומן Google</span></div></header>
+<div class="chev" aria-hidden="true"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <section class="intro">
+    <div>
+      <div class="eyebrow">ברוכה הבאה למינהל התכנון</div>
+      <h1>היום הראשון שלי</h1>
+      <p>יום עבודה אחד, 8 תחנות. בכל תחנה משימה קטנה ב-Gmail או ביומן, כמו ביום עבודה אמיתי. לוחצים על שעה, מבצעים ומסמנים ✓.</p>
+    </div>
+    <div class="progress" aria-live="polite"><div class="lbl"><span id="progTxt">0 מתוך 8 משימות</span><span id="progClock">08:00</span></div><div class="track"><div class="fill" id="progFill"></div></div></div>
+  </section>
+  <div class="sky" id="sky" aria-hidden="true">
+    <svg viewBox="0 0 1000 170" preserveAspectRatio="none" class="arc"><path d="M60 160 Q500 -60 940 160" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-dasharray="6 10"/></svg>
+    <div class="sun" id="sun"></div>
+    <div class="cloud c1"></div><div class="cloud c2"></div>
+    <div class="clock" id="clock">08:00</div>
+    <div class="ground"><span>🏢</span><span>🌳</span><span>🏠</span></div>
+  </div>
+
+
+  <div class="day" id="oneView">
+    <ol class="rail" id="rail" aria-label="תחנות היום"></ol>
+    <div id="cardSlot"></div>
+  </div>
+  <div id="allView" hidden></div>
+</main>
+
+<script>
+(function(){
+  const I={
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    reply:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 016 6v4"/>',
+    people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 016 5"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+    flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+    next:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+    moon:'<path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/>',
+    star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>'
+  };
+  const S=[
+    {t:'08:00',n:'פותחים את היום',tool:'Gmail',ic:'sun',
+     situ:'הגעת למשרד המחוז. בתיבה כבר מחכות לך הודעות: ברכה ממשאבי אנוש, הזמנה מהמנהלת ושאלה ממתכנן.',
+     what:'להיכנס ל-Gmail, לעבור על ההודעות החדשות ולסמן את החשובות.',
+     how:['פותחים את Chrome ונכנסים לחשבון Gmail הארגוני.','בתיקייה <span class="ui">דואר נכנס</span> הודעות שעוד לא נקראו מופיעות <b>בהדגשה</b>.','עוברים על השולחים והנושאים לפני שפותחים הכול.','הודעה חשובה? לוחצים על סמל הכוכב ☆ שלידה. היא תופיע גם בתיקייה <span class="ui">מסומן בכוכב</span>.'],
+     why:'סקירה של 10 דקות בבוקר מונעת פספוס של משהו דחוף, ונותנת תמונה של היום.',
+     tip:'שמרי את Gmail במועדפים של Chrome (הכוכב בשורת הכתובת). כך מחר תגיעי אליו בלחיצה אחת.'},
+    {t:'09:00',n:'מתכננים את היום',tool:'יומן Google',ic:'cal',
+     situ:'המנהלת ביקשה שתפני לעצמך זמן לקריאת הנהלים, ויש לך פגישת היכרות בצהריים.',
+     what:'לפתוח את היומן, לראות מה קבוע להיום ולשריין זמן לעבודה שקטה.',
+     how:['פותחים את יומן Google: <span class="ui">calendar.google.com</span> או מתפריט האפליקציות של Google (תשע הנקודות למעלה).','עוברים לתצוגת יום כדי לראות את כל הפגישות של היום.','לוחצים על משבצת ריקה ביומן וכותבים כותרת: <span class="ui">קריאת נהלים</span>.','לוחצים <span class="ui">שמירה</span>.'],
+     why:'משימה שיש לה שעה ביומן באמת קורית. גם הקולגות רואים שאת עסוקה ולא קובעים לך פגישה על זה.',
+     tip:'אפשר לבחור צבע שונה לפגישות ולזמני עבודה, וכך היום נקרא במבט אחד.'},
+    {t:'10:30',n:'מטפלים בפניות',tool:'Gmail',ic:'reply',
+     situ:'מתכנן מהמחוז מבקש את הפרוטוקול של הישיבה האחרונה. הקובץ שמור אצלך.',
+     what:'לענות לו, לצרף את הקובץ ולסמן את ההודעה בתווית.',
+     how:['פותחים את ההודעה ולוחצים <span class="ui">השבה</span>.','כותבים תשובה קצרה, ולוחצים על סמל המהדק 📎 כדי לצרף את הקובץ.','בודקים שהקובץ הנכון צורף, ולוחצים <span class="ui">שליחה</span>.','חוזרים לתיבה, מסמנים את ההודעה ולוחצים על סמל התוויות כדי לבחור תווית, למשל <span class="ui">לעיון</span>.'],
+     why:'מענה מהיר ומסודר בונה אמון מול עמיתים, ותוויות שומרות על תיבה שקל למצוא בה דברים.',
+     tip:'<span class="ui">השבה לכולם</span> רק כשכל הנמענים באמת צריכים לדעת. אחרת מספיקה <span class="ui">השבה</span>.'},
+    {t:'12:00',n:'מתאמים פגישה',tool:'יומן Google',ic:'people',
+     situ:'המנהלת מבקשת שתתאמי פגישת היכרות עם שלושה אנשים מהצוות, לשבוע הבא.',
+     what:'ליצור אירוע ביומן, להוסיף משתתפים ולשלוח הזמנה.',
+     how:['ביומן לוחצים <span class="ui">יצירה</span> ובוחרים <span class="ui">אירוע</span>.','כותבים כותרת: <span class="ui">פגישת היכרות</span>, ובוחרים תאריך ושעה.','בשדה <span class="ui">משתתפים</span> מקלידים את כתובות המייל של אנשי הצוות.','לפני שמאשרים: בודקים שהמשתתפים פנויים בשעה שבחרת.','לוחצים <span class="ui">שמירה</span> ומאשרים שליחת הזמנה.'],
+     why:'הזמנה ביומן נכנסת ישר ללוח הזמנים של כולם, עם תזכורת, וחוסכת שרשרת של מיילים „מתי נוח לך?".',
+     tip:'הוסיפי בתיאור האירוע משפט על מטרת הפגישה. אנשים מגיעים מוכנים יותר.'},
+    {t:'13:00',n:'חוזרים לעבודה',tool:'Gmail',ic:'search',
+     situ:'מישהו מזכיר לך הודעה מלפני כמה ימים בנושא „תכנית שכונת הגפן". את לא זוכרת מי שלח.',
+     what:'למצוא את ההודעה בעזרת החיפוש.',
+     how:['לוחצים על שורת <span class="ui">חיפוש באימייל</span> בראש המסך.','מקלידים מילה שמופיעה בהודעה, למשל <span class="ui">הגפן</span>, ולוחצים Enter.','יותר מדי תוצאות? לוחצים על סמל אפשרויות החיפוש בקצה השורה, ומסננים לפי שולח, תאריך או „יש קובץ מצורף".'],
+     why:'ב-Gmail לא צריך לזכור באיזו תיקייה שמרת. מחפשים כמו בגוגל, וכל הודעה נמצאת תוך שניות.',
+     tip:'אפשר לחפש גם לפי שם השולח, או לפי מילה מתוך שם הקובץ המצורף.'},
+    {t:'14:00',n:'עוקבים אחר משימות',tool:'Gmail + יומן',ic:'flag',
+     situ:'הגיעה בקשה להכין חוות דעת עד יום חמישי. אין זמן לטפל בה היום, ואסור שהיא תישכח.',
+     what:'לסמן את ההודעה לטיפול ולשריין לה זמן ביומן.',
+     how:['מסמנים את ההודעה בתווית <span class="ui">לטיפול</span>.','ביומן יוצרים משבצת זמן ביום רביעי: <span class="ui">הכנת חוות דעת</span>.','אפשרות נוספת: מעבירים את העכבר על ההודעה ולוחצים על סמל השעון. ההודעה תיעלם מהתיבה ותחזור במועד שבחרת (נשמרת בתיקייה <span class="ui">לטיפול בהמשך</span>). <span class="verify">✔ לבדוק מול המסך</span>'],
+     why:'הראש פנוי כשהמשימות רשומות במקום אחד. כך לא שוכחים התחייבות, וגם לא סוחבים אותה כל היום.',
+     tip:'שימי לב: התווית <span class="ui">לטיפול</span> שיצרת לבד היא לא אותו דבר כמו התיקייה המובנית <span class="ui">לטיפול בהמשך</span>.'},
+    {t:'15:00',n:'מתכוננים למחר',tool:'יומן Google',ic:'next',
+     situ:'מחר יש לך ישיבת צוות ראשונה. קיבלת הזמנה, ועוד לא אישרת אותה.',
+     what:'לבדוק את היומן של מחר ולענות להזמנות פתוחות.',
+     how:['ביומן עוברים לתצוגת שבוע ובודקים את מחר.','לוחצים על כל אירוע ובודקים שעה, מקום וקישור.','בהזמנות שעוד לא ענית עליהן בוחרים <b>כן</b>, <b>לא</b> או <b>אולי</b>, כדי שמי שהזמין יידע.'],
+     why:'5 דקות של הכנה היום חוסכות לחץ מחר בבוקר. וכשעונים להזמנות, המארגן יודע על מי לסמוך.',
+     tip:'מסמך שצריך לקרוא לפני ישיבה? פתחי אותו עכשיו, לא דקה לפני.'},
+    {t:'15:30',n:'מסיימים את היום',tool:'Gmail',ic:'moon',
+     situ:'עוד חצי שעה הביתה. הגיע הזמן לבדיקה אחרונה ולסגור קצוות.',
+     what:'לוודא שלא נשאר שום דבר דחוף פתוח.',
+     how:['עוברים על <span class="ui">דואר נכנס</span> ובודקים שאין הודעה דחופה שלא טופלה.','נכנסים ל-<span class="ui">טיוטות</span> ובודקים שלא נשאר מייל שנכתב ולא נשלח.','נכנסים ל-<span class="ui">נשלח</span> ומוודאים שההודעות החשובות של היום יצאו לנמענים הנכונים.'],
+     why:'סגירה מסודרת של היום מאפשרת להתנתק באמת, ולהתחיל את מחר בלי הפתעות.',
+     tip:'מייל שכתבת ועוד לא שלחת נשמר לבד ב<span class="ui">טיוטות</span>. אם החלון נסגר, שום דבר לא הלך לאיבוד.'}
+  ];
+  const HABITS=[
+    ['לבדוק הודעות חדשות ולתעדף טיפול','בבוקר ובצהריים: מה דחוף, מה יכול לחכות.'],
+    ['להשתמש בתוויות כדי לשמור על סדר','דחוף · לטיפול · לעיון. תיבה מסודרת = פחות לחץ.'],
+    ['לבדוק את היומן לפני קביעת פגישות','כך לא קובעים שתי פגישות באותה שעה.'],
+    ['לוודא שהודעות חשובות נשלחו לנמענים הנכונים','מבט ב„נשלח" לפני שהולכים הביתה.'],
+    ['לבדוק משימות פתוחות ולהיערך ליום הבא','5 דקות בסוף היום חוסכות חצי שעה בבוקר.']
+  ];
+  const done=new Set(); let cur=0;
+  const svg=k=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+I[k]+'</svg>';
+
+  function cardHTML(s,i,interactive){
+    return '<article class="card" aria-labelledby="st'+i+(interactive?'':'a')+'">'+
+      '<div class="chead"><span class="big">'+s.t+'</span><h2 id="st'+i+(interactive?'':'a')+'">'+s.n+'</h2><span class="tool">'+s.tool+'</span></div>'+
+      '<div class="cbody">'+
+        '<div class="situ"><b>הסיטואציה: </b>'+s.situ+'</div>'+
+        '<div class="sec"><h4>מה עושים?</h4><p>'+s.what+'</p></div>'+
+        '<div class="sec"><h4>איך? שלב אחר שלב</h4><ol class="how">'+s.how.map(h=>'<li><span>'+h+'</span></li>').join('')+'</ol></div>'+
+        '<div class="why"><b>למה זה חשוב?</b><span>'+s.why+'</span></div>'+
+        (s.tip?'<div class="tip"><b>💡 טיפ: </b>'+s.tip+'</div>':'')+
+      '</div>'+
+      (interactive?'<div class="cfoot"><button type="button" class="donebtn" id="doneBtn" aria-pressed="'+done.has(i)+'">'+(done.has(i)?'✓ בוצע!':'סימון כבוצע')+'</button><div class="navs"><button type="button" class="navb" id="pv"'+(i===0?' disabled':'')+'>→ התחנה הקודמת</button><button type="button" class="navb" id="nx">'+(i===S.length-1?'לטיפים ←':'התחנה הבאה ←')+'</button></div></div>':'')+
+    '</article>';
+  }
+  function tipsHTML(interactive){
+    return '<article class="card tips"><div class="chead"><span class="big">16:00</span><h2>טיפים לסיום היום: 5 הרגלי עבודה נכונים</h2></div><div class="cbody"><ol class="habits">'+
+      HABITS.map(h=>'<li><div><b>'+h[0]+'</b><span>'+h[1]+'</span></div></li>').join('')+
+      '</ol><p class="foot-note">כל התרחישים והשמות במדריך פיקטיביים. שמות הכפתורים נבדקו מול ממשק Gmail בעברית ומרכז העזרה של Google. פריטים שסומנו „✔ לבדוק מול המסך" עשויים להשתנות לפי גרסת הממשק והגדרות הארגון.</p></div>'+
+      (interactive?'<div class="cfoot"><span class="foot-note" style="margin:0" id="endMsg"></span><div class="navs"><button type="button" class="navb" id="pv">→ חזרה לתחנה האחרונה</button></div></div>':'')+'</article>';
+  }
+  const rail=document.getElementById('rail');
+  S.concat([{t:'16:00',n:'טיפים לסיום',ic:'star'}]).forEach((s,i)=>{
+    const li=document.createElement('li');
+    li.innerHTML='<button type="button" class="stop"><span class="pin">'+svg(s.ic)+'</span><span><span class="t">'+s.t+'</span><span class="n">'+s.n+'</span></span></button>';
+    li.firstChild.onclick=()=>show(i);
+    rail.appendChild(li);
+  });
+  function updateRail(){
+    [...rail.querySelectorAll('.stop')].forEach((b,i)=>{
+      b.classList.toggle('done',done.has(i));
+      if(i===cur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
+    });
+    document.getElementById('progTxt').textContent=done.size+' מתוך '+S.length+' משימות';
+    document.getElementById('progFill').style.width=(done.size/S.length*100)+'%';
+    document.getElementById('progClock').textContent=cur<S.length?S[cur].t:'16:00';
+  }
+  function show(i,same){
+    cur=i; const slot=document.getElementById('cardSlot'); moveSun(i);
+    if(i<S.length){
+      slot.innerHTML=cardHTML(S[i],i,true);
+      document.getElementById('doneBtn').onclick=e=>{ const was=done.has(i); if(was)done.delete(i); else done.add(i); show(i,true); if(!was){ const r=e.target.getBoundingClientRect(); burst(40,r.left+r.width/2,r.top); const pin=rail.querySelectorAll('.stop')[i]; pin.classList.remove('pop'); void pin.offsetWidth; pin.classList.add('pop'); if(done.size===S.length) setTimeout(()=>burst(160),300);} };
+      document.getElementById('pv').onclick=()=>show(i-1);
+      document.getElementById('nx').onclick=()=>show(i+1);
+    } else {
+      slot.innerHTML=tipsHTML(true);
+      document.getElementById('pv').onclick=()=>show(S.length-1);
+      document.getElementById('endMsg').innerHTML= done.size===S.length?'<span class="stamp">היום הראשון: הושלם ✓</span>':'הושלמו '+done.size+' מתוך '+S.length+'. אפשר לחזור לכל תחנה בציר הזמן.';
+    }
+    if(!same){ const c=slot.firstElementChild; if(c){ c.classList.add('slide-in'); } }
+    updateRail();
+  }
+  document.getElementById('allView').innerHTML=S.map((s,i)=>cardHTML(s,i,false)).join('')+tipsHTML(false);
+  function view(all){ document.getElementById('oneView').hidden=all; document.getElementById('allView').hidden=!all; }
+  if(location.hash==='#print'){view(true);}
+  const TIMES=['08:00','09:00','10:30','12:00','13:00','14:00','15:00','15:30','16:00'];
+  function moveSun(i){ const t=TIMES[Math.min(i,8)]; const [h,m]=t.split(':').map(Number); const f=Math.min(1,Math.max(0,((h+m/60)-8)/8));
+    const sky=document.getElementById('sky'), sun=document.getElementById('sun');
+    const x=7+86*f, y=72-Math.sin(Math.PI*f)*52; sun.style.right=x+'%'; sun.style.top=y+'%';
+    sky.classList.toggle('eve',f>=.8&&f<1); sky.classList.toggle('night',f>=1);
+    sky.style.background=f>=1?'linear-gradient(180deg,#1C2E55,#4A5F8E)':f>=.8?'linear-gradient(180deg,#F7B47A,#FCE3C8)':f<.15?'linear-gradient(180deg,#FFD9A8,#EAF6FD)':'linear-gradient(180deg,#9FD3F2,#EAF6FD)';
+    document.getElementById('clock').textContent=t; }
+  const cv=document.getElementById('confetti'), cx=cv.getContext('2d'); let parts=[], raf=null;
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function burst(n,x,y){ if(reduce)return; cv.width=innerWidth; cv.height=innerHeight; const cols=['#F7B923','#D9481A','#58B1DC','#3B7A31','#B3C860','#0068BD'];
+    x=x??innerWidth/2; y=y??innerHeight*.35;
+    for(let k=0;k<n;k++)parts.push({x:x+(Math.random()-.5)*60,y:y,vx:(Math.random()-.5)*11,vy:-Math.random()*11-3,r:Math.random()*6+4,c:cols[k%cols.length],a:Math.random()*6,life:0});
+    if(!raf)tick(); }
+  function tick(){ cx.clearRect(0,0,cv.width,cv.height); parts.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;p.life++;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);cx.restore();});
+    parts=parts.filter(p=>p.y<cv.height+20&&p.life<200); raf=parts.length?requestAnimationFrame(tick):(cx.clearRect(0,0,cv.width,cv.height),null); }
+  show(0);
+})();
+</script>
+
+</body>
+</html>

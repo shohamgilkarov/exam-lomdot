@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לומדות · שוהם גילקרוב</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Heebo:wght@700;800;900&display=swap">
+<style>
+:root{--blue:#0068BD;--blue-deep:#0B3F73;--ink:#17283A;--muted:#566779;--line:#D5E1ED;--mist:#EEF4FA;--ground:#F5F8FB;--yellow:#F7B923;--orange:#D9481A;--sky:#58B1DC;--green:#3B7A31;--lime:#B3C860}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:'Assistant',Arial,sans-serif;font-size:18px;line-height:1.55}
+.chev{height:6px;background:linear-gradient(90deg,var(--yellow) 0 20%,var(--orange) 20% 40%,var(--sky) 40% 60%,var(--green) 60% 80%,var(--lime) 80% 100%)}
+.wrap{max-width:960px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-left,0px)) 60px}
+h1{font-family:'Heebo',Arial,sans-serif;font-weight:900;font-size:clamp(30px,5vw,44px);color:var(--blue-deep);margin:0 0 8px}
+.sub{color:var(--muted);font-size:19px;margin:0 0 30px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+a.card{display:flex;flex-direction:column;gap:8px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:22px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s}
+a.card:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 14px 30px -18px rgba(0,104,189,.7)}
+a.card:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.num{font-family:'Heebo',Arial,sans-serif;font-weight:800;color:var(--sky);font-size:14px}
+.ic{font-size:40px}
+a.card b{font-family:'Heebo',Arial,sans-serif;font-size:21px;color:var(--blue-deep)}
+a.card span{color:var(--muted);font-size:16px}
+.go{margin-top:auto;font-family:'Heebo',Arial,sans-serif;font-weight:800;color:var(--blue)}
+footer{margin-top:34px;color:var(--muted);font-size:14px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="chev"></div>
+<main class="wrap">
+  <h1>הלומדות שלי למבחן</h1>
+  <p class="sub">שוהם גילקרוב · מפתחת למידה דיגיטלית · תוצרים למבחן מדריך/ת מטמיע/ת מערכות מידע</p>
+  <div class="grid">
+    <a class="card" href="gmail.html"><span class="num">שאלה 4</span><span class="ic">✉️</span><b>תיבת הדואר שלי מוכנה</b><span>חתימה ותוויות ב-Gmail, בתרגול מעשי</span><span class="go">לפתיחה ←</span></a>
+    <a class="card" href="calendar.html"><span class="num">שאלה 5</span><span class="ic">📅</span><b>ישיבת צוות ביומן Google</b><span>אירוע חוזר, שיתוף בפרטיות ופתרון תקלות</span><span class="go">לפתיחה ←</span></a>
+    <a class="card" href="first-day.html"><span class="num">שאלה 6</span><span class="ic">☀️</span><b>היום הראשון שלי</b><span>מפת יום אינטראקטיבית ב-Gmail וביומן</span><span class="go">לפתיחה ←</span></a>
+  </div>
+  <footer>כל השמות והתרחישים פיקטיביים. זה לא אתר רשמי של מינהל התכנון.</footer>
+</main>
+</body>
+</html>

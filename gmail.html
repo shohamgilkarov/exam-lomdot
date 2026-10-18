@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>תיבת הדואר שלי מוכנה</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@400;500;700;800;900&display=swap">
+<style>
+/* Layout: lesson card per screen; screens 2–3 are a hands-on Gmail simulator (mock UI + task banner), screen 4 a sorting game, screen 5 a checklist that ends in a celebration. Single light theme by choice. */
+:root{
+  --blue:#0068BD; --blue-deep:#0B3F73; --ink:#17283A; --muted:#566779; --line:#D5E1ED; --mist:#EEF4FA; --paper:#FFFFFF; --ground:#F5F8FB;
+  --orange:#D9481A; --orange-soft:#FFEDE5; --green:#3B7A31; --green-soft:#E8F3E1; --lime:#B3C860; --sky:#58B1DC; --yellow:#F7B923; --yellow-soft:#FFF5D6;
+  --g-blue:#0B57D0; --g-bg:#F6F8FC; --g-side:#D3E3FD;
+  --f-head:'Heebo','Assistant',Arial,sans-serif; --f-body:'Assistant','Heebo',Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;direction:rtl;margin:0}
+h1,h2,h3{font-family:var(--f-head);line-height:1.2;text-wrap:balance;margin:0}
+button,input,select{font:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{background:var(--paper);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;flex-wrap:wrap}
+.brandmark{display:inline-flex;align-items:center;gap:10px}
+.bm-chev{display:flex;gap:3px;align-items:flex-end}
+.bm-chev i{width:7px;border-radius:2px;display:block;transform:skewY(-18deg)}
+.bm-chev i:nth-child(1){height:14px;background:var(--yellow)}.bm-chev i:nth-child(2){height:20px;background:var(--orange)}.bm-chev i:nth-child(3){height:26px;background:var(--sky)}.bm-chev i:nth-child(4){height:20px;background:var(--green)}.bm-chev i:nth-child(5){height:14px;background:var(--lime)}
+.bm-txt b{font-family:var(--f-head);font-size:16px;color:var(--blue-deep);display:block;line-height:1.15}
+.bm-txt small{font-size:12.5px;color:var(--muted)}
+.tag{font-family:var(--f-head);font-weight:700;font-size:14px;color:var(--blue);background:var(--mist);padding:6px 12px;border-radius:999px}
+.chev{height:6px;background:linear-gradient(90deg,var(--yellow) 0 20%,var(--orange) 20% 40%,var(--sky) 40% 60%,var(--green) 60% 80%,var(--lime) 80% 100%)}
+
+.stepper{display:flex;gap:6px;list-style:none;padding:0;margin:20px 0 16px;flex-wrap:wrap}
+.stepper li{flex:1 1 110px;min-width:0}
+.stepper button{width:100%;border:0;background:none;padding:0;cursor:pointer;text-align:right;color:var(--muted)}
+.stepper .bar{display:block;height:6px;border-radius:3px;background:var(--line);margin-bottom:6px;transition:background .3s}
+.stepper .lbl{font-size:14px;font-weight:600;font-family:var(--f-head)}
+.stepper li.done .bar{background:var(--green)}
+.stepper li.now .bar{background:var(--blue)}
+.stepper li.now .lbl{color:var(--blue)}
+.stepper button:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:4px}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:28px clamp(16px,4vw,36px);box-shadow:0 8px 30px -18px rgba(11,63,115,.35)}
+.screen{display:none}
+.screen.on{display:block;animation:in .4s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.eyebrow{font-family:var(--f-head);font-weight:700;color:var(--blue);font-size:15px;margin-bottom:4px}
+h2{font-size:clamp(26px,3.4vw,34px);font-weight:800;color:var(--blue-deep);margin-bottom:10px}
+p{margin:0 0 10px;max-width:62ch}
+.lead{font-size:20px}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:12px 22px;font-family:var(--f-head);font-weight:700;font-size:17px;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-deep)}
+.btn.ghost{background:var(--mist);color:var(--blue-deep)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.nav{display:flex;justify-content:space-between;gap:12px;margin:20px 0 40px;flex-wrap:wrap}
+
+/* opening */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+.hero > *{min-width:0}
+.goal-list{list-style:none;padding:0;margin:16px 0 22px;display:grid;gap:10px}
+.goal-list li{display:flex;gap:12px;align-items:center;opacity:0;animation:pop .5s ease forwards}
+.goal-list li:nth-child(2){animation-delay:.15s}.goal-list li:nth-child(3){animation-delay:.3s}
+@keyframes pop{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.goal-list .n{flex:none;width:34px;height:34px;border-radius:50%;background:var(--mist);color:var(--blue);font-family:var(--f-head);font-weight:800;display:grid;place-items:center}
+.envelope{position:relative;aspect-ratio:4/3;max-width:100%}
+.envelope svg{width:100%;height:auto;display:block}
+.float{animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* task banner */
+.taskbar{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--blue-deep);color:#fff;border-radius:12px;padding:12px 16px;margin:6px 0 14px}
+.taskbar .cnt{font-family:var(--f-head);font-weight:800;background:rgba(255,255,255,.15);border-radius:8px;padding:4px 10px;font-size:14px;white-space:nowrap}
+.taskbar .txt{font-family:var(--f-head);font-weight:700;font-size:17.5px}
+.taskbar .txt small{display:block;font-family:var(--f-body);font-weight:400;font-size:15px;opacity:.85}
+.taskbar .dots{display:flex;gap:5px}
+.taskbar .dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3);display:block;transition:background .3s}
+.taskbar .dots i.ok{background:var(--lime)}
+.taskbar .dots i.cur{background:#fff}
+.hintline{min-height:28px;font-size:15.5px;color:var(--orange);font-weight:600;margin-top:8px}
+
+/* Gmail mock */
+.gm{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--g-bg);font-family:Arial,'Assistant',sans-serif;font-size:14px;color:#1f1f1f;position:relative;user-select:none;min-height:430px}
+.gm-top{display:flex;align-items:center;gap:12px;padding:10px 14px}
+.gm-logo{font-weight:700;color:#444;font-size:19px;display:flex;align-items:center;gap:6px}
+.gm-logo i{width:22px;height:16px;display:block;border:3px solid #EA4335;border-top-color:#EA4335;border-radius:2px;position:relative}
+.gm-search{flex:1;background:#E9EEF6;border-radius:24px;padding:9px 16px;color:#5f6368;min-width:0}
+.gm-icons{display:flex;gap:6px;align-items:center}
+.gm-ico{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:0;background:none;color:#444;font-size:19px}
+.gm-ico:hover{background:#E1E5EA}
+.gm-body{display:grid;grid-template-columns:200px 1fr;min-height:370px}
+.gm-side{padding:6px 8px 12px}
+.gm-compose{display:inline-flex;align-items:center;gap:10px;background:#C2E7FF;border-radius:16px;padding:14px 18px;font-weight:600;margin:4px 0 12px;border:0;cursor:pointer;color:#001d35}
+.gm-nav{list-style:none;margin:0;padding:0}
+.gm-nav li{padding:5px 14px;border-radius:0 16px 16px 0;display:flex;justify-content:space-between;font-size:14px}
+[dir=rtl] .gm-nav li,.gm-nav li{border-radius:16px 0 0 16px}
+.gm-nav li.act{background:var(--g-side);font-weight:700}
+.gm-labels{display:flex;justify-content:space-between;align-items:center;padding:14px 14px 4px;font-weight:700;font-size:15px}
+.gm-plus{width:30px;height:30px;border-radius:50%;border:0;background:none;font-size:22px;cursor:pointer;color:#444;line-height:1}
+.gm-plus:hover{background:#E1E5EA}
+.gm-lbl{padding:3px 14px;display:flex;gap:8px;align-items:center;font-size:14px;animation:in .4s}
+.gm-lbl i{width:12px;height:12px;border-radius:3px;display:block;background:#888}
+.gm-main{background:#fff;border-radius:14px;margin:0 0 10px 10px;position:relative;overflow:hidden;min-width:0}
+.gm-row{display:grid;grid-template-columns:28px 120px 1fr;gap:8px;align-items:center;padding:9px 12px;border-bottom:1px solid #EEF1F4;font-size:13.5px}
+.gm-row .who{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gm-row .subj{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#444}
+.gm-row input{width:16px;height:16px;cursor:pointer;accent-color:#0B57D0}
+.gm-row.sel{background:#C2DBFF}
+.gm-chip{display:inline-block;font-size:11.5px;border-radius:4px;padding:0 6px;margin-inline-end:6px;font-weight:700;color:#fff;background:var(--orange)}
+.gm-toolbar{display:flex;gap:6px;align-items:center;padding:6px 10px;border-bottom:1px solid #EEF1F4;min-height:44px}
+/* settings page */
+.gm-settings{padding:12px 16px}
+.gm-settings h4{margin:0 0 8px;font-size:20px;font-weight:400}
+.gm-tabs{display:flex;gap:16px;border-bottom:1px solid #ddd;font-size:13px;padding-bottom:6px;margin-bottom:12px;color:#444;flex-wrap:wrap}
+.gm-tabs b{color:#0B57D0;border-bottom:3px solid #0B57D0;padding-bottom:4px}
+.gm-srow{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:10px 0;border-bottom:1px solid #eee;font-size:13.5px}
+.gm-srow > b{font-weight:700}
+.gm-srow .dim{color:#777}
+.gm-btn{border:1px solid #c4c7c5;background:#fff;border-radius:18px;padding:6px 14px;cursor:pointer;font-size:13.5px;color:#0B57D0}
+.gm-btn.solid{background:#0B57D0;color:#fff;border-color:#0B57D0}
+.gm-btn.square{border-radius:4px;color:#333;background:#f8f9fa}
+.gm-editor{border:1px solid #c4c7c5;border-radius:6px;min-height:92px;padding:8px 10px;font-size:13px;line-height:1.5;background:#fff}
+.gm-editor .nm{font-weight:700}
+.gm-editor .cf{color:#777;font-size:11.5px;margin-top:4px}
+.gm-select{border:1px solid #c4c7c5;border-radius:4px;padding:4px 8px;font-size:13px;background:#fff;cursor:pointer}
+/* quick settings */
+.gm-quick{position:absolute;top:56px;left:12px;width:250px;background:#fff;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:14px;z-index:5;animation:in .25s}
+.gm-quick h5{margin:0 0 10px;font-size:15px}
+/* dialog */
+.gm-veil{position:absolute;inset:0;background:rgba(0,0,0,.25);display:grid;place-items:center;z-index:6;animation:fade .2s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.gm-dialog{background:#fff;border-radius:22px;padding:20px 22px;width:min(340px,90%);box-shadow:0 10px 30px rgba(0,0,0,.25);animation:in .25s}
+.gm-dialog h5{margin:0 0 12px;font-size:19px;font-weight:400}
+.gm-dialog input{width:100%;border:2px solid #0B57D0;border-radius:6px;padding:9px 10px;font-size:15px;direction:rtl}
+.gm-dialog .acts{display:flex;justify-content:flex-start;gap:12px;margin-top:14px;flex-direction:row-reverse}
+.gm-toast{position:absolute;bottom:14px;right:14px;background:#323232;color:#fff;border-radius:6px;padding:10px 16px;font-size:14px;z-index:7;animation:in .3s}
+.gm-menu{position:absolute;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.2);padding:6px 0;z-index:6;min-width:170px;animation:in .2s}
+.gm-menu button{display:flex;gap:8px;align-items:center;width:100%;border:0;background:none;padding:8px 14px;text-align:right;cursor:pointer;font-size:14px}
+.gm-menu button:hover{background:#F1F3F4}
+/* target + feedback */
+.tgt{position:relative}
+.pulse{animation:pulse 1.2s ease-in-out infinite;box-shadow:0 0 0 0 rgba(217,72,26,.7);border-radius:10px}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(217,72,26,.65)}70%{box-shadow:0 0 0 12px rgba(217,72,26,0)}100%{box-shadow:0 0 0 0 rgba(217,72,26,0)}}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.sigform{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:10px 0}
+.sigform label{display:grid;gap:2px;font-size:13px;font-weight:700}
+.sigform input{border:1px solid #c4c7c5;border-radius:6px;padding:6px 8px;font-size:14px}
+.done-panel{text-align:center;padding:26px 16px}
+.done-panel .big{font-size:52px;animation:bounce 1s ease}
+@keyframes bounce{0%{transform:scale(.3)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.mini-mail{max-width:420px;margin:12px auto 0;text-align:right;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mini-mail .h{background:#404040;color:#fff;font-size:13px;padding:6px 12px}
+.mini-mail .b{padding:12px;font-size:14px;line-height:1.5}
+.mini-mail .sig{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px;animation:slide 1s ease}
+@keyframes slide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* sort game */
+.sort{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;margin-top:14px}
+.sort > *{min-width:0}
+.msgs{display:grid;gap:10px;align-content:start}
+.msg{background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;cursor:grab;display:grid;gap:2px;transition:border-color .15s,box-shadow .15s,transform .2s;text-align:right;color:inherit}
+.msg:hover{border-color:var(--sky);transform:translateY(-2px)}
+.msg.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,104,189,.15)}
+.msg .from{font-size:13px;color:var(--muted)}
+.msg .s{font-weight:700;font-size:16px}
+.msg.placed{display:none}
+.bins{display:grid;gap:12px;align-content:start}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;min-height:80px;transition:background .15s,border-color .15s,transform .2s;cursor:pointer;background:var(--paper);text-align:right;color:inherit;width:100%}
+.bin.over{background:var(--mist);border-color:var(--blue);transform:scale(1.02)}
+.bin.hit{animation:hit .5s}
+@keyframes hit{50%{transform:scale(1.04);background:var(--green-soft)}}
+.bin h4{margin:0 0 4px;font-family:var(--f-head);font-size:17px;display:flex;align-items:center;gap:8px}
+.bin .desc{font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.bin .in{display:flex;flex-direction:column;gap:6px}
+.bin .in span{font-size:14px;background:var(--mist);border-radius:6px;padding:4px 8px;animation:in .3s}
+.bin.urgent h4{color:var(--orange)} .bin.todo h4{color:#8A5A00} .bin.read h4{color:var(--blue)}
+.dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+.bin.urgent .dot{background:var(--orange)} .bin.todo .dot{background:var(--yellow)} .bin.read .dot{background:var(--sky)}
+.feedback{border-radius:10px;padding:10px 14px;margin-top:10px;font-weight:600;display:none}
+.feedback.show{display:block;animation:in .25s}
+.feedback.ok{background:var(--green-soft);color:var(--green)}
+.feedback.no{background:var(--orange-soft);color:var(--orange)}
+.feedback.hint{background:var(--yellow-soft);color:#7A4F00}
+.score{font-family:var(--f-head);font-weight:700;color:var(--blue-deep)}
+
+/* end */
+.checklist{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.checklist label{display:flex;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;transition:background .2s}
+.checklist input{width:22px;height:22px;accent-color:var(--green);flex:none}
+.checklist input:checked + span{color:var(--muted);text-decoration:line-through}
+.checklist label:has(input:checked){background:var(--green-soft)}
+.success{display:none;text-align:center;padding:30px 10px 10px}
+.success.show{display:block;animation:in .5s}
+.success .trophy{font-size:72px;animation:bounce 1s ease}
+.success h2{font-size:36px;color:var(--green)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+@media (max-width:760px){
+  .hero,.sort{grid-template-columns:1fr}
+  .gm-body{grid-template-columns:1fr}
+  .gm-side{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .gm-nav{display:none}
+  .gm-main{margin:0 8px 8px}
+  .gm-row{grid-template-columns:24px 90px 1fr}
+  .sigform{grid-template-columns:1fr}
+  .taskbar{grid-template-columns:1fr}
+  body{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header class="top"><div class="wrap"><span class="brandmark"><span class="bm-chev" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="bm-txt"><b>שוהם גילקרוב</b><small>תוצר למבחן מטמיע/ת מערכות מידע</small></span></span><span class="tag">לומדת הטמעה · Gmail</span></div></header>
+<div class="chev" aria-hidden="true"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <ol class="stepper" id="stepper" aria-label="התקדמות בלומדה"></ol>
+
+  <!-- 1 -->
+  <section class="screen card" data-title="פתיחה">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">לומדה קצרה · 10 דקות</div>
+        <h2>תיבת הדואר החדשה שלכם כמעט מוכנה</h2>
+        <p class="lead">נשארו כמה הגדרות קטנות. עושים אותן כאן, בתרגול בטוח שמדמה את Gmail, ואז אותו דבר בחשבון האמיתי.</p>
+        <ul class="goal-list">
+          <li><span class="n">1</span><span><b>חתימה</b> שמופיעה לבד בכל מייל</span></li>
+          <li><span class="n">2</span><span><b>3 תוויות</b>: דחוף · לטיפול · לעיון</span></li>
+          <li><span class="n">3</span><span><b>משחק מיון</b> קצר לסיום</span></li>
+        </ul>
+        <button class="btn primary" data-go="next">מתחילים ←</button>
+      </div>
+      <div class="envelope float" aria-hidden="true">
+        <svg viewBox="0 0 320 240"><rect x="20" y="50" width="280" height="170" rx="16" fill="#EEF4FA"/><path d="M20 66 L160 150 L300 66" fill="none" stroke="#0068BD" stroke-width="6" stroke-linejoin="round"/><rect x="20" y="50" width="280" height="170" rx="16" fill="none" stroke="#0068BD" stroke-width="6"/><circle cx="262" cy="56" r="30" fill="#3B7A31"/><path d="M248 56l10 10 18-20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="60" y="176" width="36" height="12" rx="4" fill="#D9481A"/><rect x="104" y="176" width="36" height="12" rx="4" fill="#F7B923"/><rect x="148" y="176" width="36" height="12" rx="4" fill="#58B1DC"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 signature simulator -->
+  <section class="screen card" data-title="חתימה">
+    <div class="eyebrow">שלב 1 · עושים את זה בעצמכם</div>
+    <h2>יוצרים חתימה</h2>
+    <p>חתימה היא כמו כרטיס ביקור בסוף כל מייל. מגדירים פעם אחת, ו-Gmail מוסיף אותה לבד. <b>לחצו בתרגול בדיוק איפה שהיינו לוחצים ב-Gmail.</b></p>
+    <div class="taskbar"><span class="cnt" id="sCnt">1/6</span><div class="txt" id="sTxt"></div><div class="dots" id="sDots"></div></div>
+    <div class="gm" id="gmSig"></div>
+    <div class="hintline" id="sHint" aria-live="polite"></div>
+  </section>
+
+  <!-- 3 labels simulator -->
+  <section class="screen card" data-title="תוויות">
+    <div class="eyebrow">שלב 2 · עושים את זה בעצמכם</div>
+    <h2>יוצרים תוויות ומסמנים הודעה</h2>
+    <p>ב-Outlook שמים הודעות בתיקיות. ב-Gmail מדביקים עליהן <b>תווית</b>, מדבקה צבעונית שאפשר לראות במבט אחד.</p>
+    <div class="taskbar"><span class="cnt" id="lCnt">1/5</span><div class="txt" id="lTxt"></div><div class="dots" id="lDots"></div></div>
+    <div class="gm" id="gmLbl"></div>
+    <div class="hintline" id="lHint" aria-live="polite"></div>
+  </section>
+
+  <!-- 4 sort game -->
+  <section class="screen card" data-title="משחק מיון">
+    <div class="eyebrow">שלב 3 · משחק</div>
+    <h2>איזו תווית מתאימה?</h2>
+    <p class="muted">גררו כל הודעה לתווית. אפשר גם ללחוץ על הודעה ואז על תווית.</p>
+    <div class="sort">
+      <div class="msgs" id="msgs"></div>
+      <div class="bins">
+        <button class="bin urgent" data-bin="urgent" type="button"><h4><span class="dot"></span>דחוף</h4><div class="desc">צריך לטפל היום</div><div class="in"></div></button>
+        <button class="bin todo" data-bin="todo" type="button"><h4><span class="dot"></span>לטיפול</h4><div class="desc">יש מה לעשות, לא היום</div><div class="in"></div></button>
+        <button class="bin read" data-bin="read" type="button"><h4><span class="dot"></span>לעיון</h4><div class="desc">רק לקרוא</div><div class="in"></div></button>
+      </div>
+    </div>
+    <div class="feedback" id="sortFb" role="status" aria-live="polite"></div>
+    <p class="score" id="sortScore" style="margin-top:10px"></p>
+  </section>
+
+  <!-- 5 finish -->
+  <section class="screen card" data-title="סיום">
+    <div id="beforeDone">
+      <div class="eyebrow">כמעט סיימתם!</div>
+      <h2>עכשיו בחשבון האמיתי</h2>
+      <p>פתחו את Gmail הארגוני, עשו את מה שתרגלתם וסמנו ✓.</p>
+      <ul class="checklist">
+        <li><label><input type="checkbox" id="c1"><span>יצרתי חתימה: ⚙ ← <b>הצגת כל ההגדרות</b> ← <b>יצירת חתימה חדשה</b></span></label></li>
+        <li><label><input type="checkbox" id="c2"><span>בחרתי אותה ב<b>ברירות מחדל לחתימה</b> ולחצתי <b>שמירת השינויים</b></span></label></li>
+        <li><label><input type="checkbox" id="c3"><span>יצרתי את התוויות <b>דחוף</b>, <b>לטיפול</b> ו<b>לעיון</b></span></label></li>
+        <li><label><input type="checkbox" id="c4"><span>סימנתי בתווית 3 הודעות מהתיבה שלי</span></label></li>
+      </ul>
+    </div>
+    <div class="success" id="success" role="status">
+      <div class="trophy">🏆</div>
+      <h2>סיימתם בהצלחה!</h2>
+      <p class="lead" style="margin:10px auto 0">תיבת הדואר שלכם מוכנה לעבודה: חתימה מקצועית, ותוויות שעוזרות לראות מה חשוב.</p>
+      <p class="muted" style="margin:10px auto 0">שאלה? מדריכת ההטמעה כאן בשבילכם.</p>
+    </div>
+  </section>
+
+  <div class="nav" id="nav"><button class="btn ghost" id="prev">→ הקודם</button><button class="btn primary" id="next">הבא ←</button></div>
+</main>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  /* ---------- navigation ---------- */
+  const screens=[...document.querySelectorAll('.screen')]; const stepper=$('stepper'); const done=new Set(); let cur=0;
+  screens.forEach((s,i)=>{const li=document.createElement('li');li.innerHTML='<button type="button"><span class="bar"></span><span class="lbl">'+(i+1)+'. '+s.dataset.title+'</span></button>';li.querySelector('button').onclick=()=>go(i);stepper.appendChild(li);});
+  function go(i){ if(i<0||i>=screens.length)return; if(i>cur)done.add(cur); cur=i;
+    screens.forEach((s,j)=>s.classList.toggle('on',j===i));
+    [...stepper.children].forEach((li,j)=>{li.classList.toggle('now',j===i);li.classList.toggle('done',done.has(j)&&j!==i)});
+    $('prev').disabled=i===0; $('next').hidden=i===screens.length-1||i===0;
+    window.scrollTo({top:0,behavior:'smooth'}); }
+  $('prev').onclick=()=>go(cur-1); $('next').onclick=()=>go(cur+1);
+  document.querySelectorAll('[data-go="next"]').forEach(b=>b.onclick=()=>go(cur+1));
+
+  /* ---------- simulator engine ---------- */
+  function sim(o){
+    let step=0, wrong=0;
+    const dots=$(o.dots); dots.innerHTML=o.steps.map(()=>'<i></i>').join('');
+    function render(){
+      const s=o.steps[step]; wrong=0; $(o.hint).textContent='';
+      $(o.cnt).textContent=(step+1)+'/'+o.steps.length;
+      $(o.txt).innerHTML=s.task+(s.sub?'<small>'+s.sub+'</small>':'');
+      [...dots.children].forEach((d,i)=>{d.className=i<step?'ok':(i===step?'cur':'')});
+      $(o.box).innerHTML=s.view();
+      if(s.bind) s.bind(next);
+    }
+    function next(){ step++; if(step>=o.steps.length){ [...dots.children].forEach(d=>d.className='ok'); o.finish(); } else render(); }
+    $(o.box).addEventListener('click',e=>{
+      const s=o.steps[step]; if(!s||!s.target)return;
+      const t=e.target.closest('[data-t]');
+      if(t&&t.dataset.t===s.target){ next(); return; }
+      if(e.target.closest('input,select,.free'))return;
+      wrong++; $(o.box).classList.remove('shake'); void $(o.box).offsetWidth; $(o.box).classList.add('shake');
+      $(o.hint).textContent=wrong>=2?'👀 הכפתור מסומן בכתום. לחצו עליו.':'לא כאן 🙂 '+s.hint;
+      if(wrong>=2){const el=$(o.box).querySelector('[data-t="'+s.target+'"]'); if(el) el.classList.add('pulse');}
+    });
+    render();
+  }
+  /* Gmail chrome */
+  const top=(gear)=>'<div class="gm-top"><span class="gm-logo"><i></i>Gmail</span><span class="gm-search">חיפוש באימייל</span><span class="gm-icons"><button class="gm-ico" type="button" aria-label="עזרה">?</button><button class="gm-ico" type="button" data-t="gear" aria-label="הגדרות">⚙</button></span></div>';
+  const side=(labels,plus)=>'<div class="gm-side"><button class="gm-compose" type="button">✏️ אימייל חדש</button><ul class="gm-nav"><li class="act"><span>דואר נכנס</span><span>12</span></li><li>מסומן בכוכב</li><li>לטיפול בהמשך</li><li>נשלח</li><li>טיוטות</li></ul><div class="gm-labels"><span>תוויות</span><button class="gm-plus" type="button" data-t="plus" aria-label="יצירת תווית חדשה">+</button></div>'+(labels||[]).map(l=>'<div class="gm-lbl"><i style="background:'+l[1]+'"></i>'+l[0]+'</div>').join('')+'</div>';
+  const inbox=(rows)=>'<div class="gm-main">'+rows+'</div>';
+  const MAILS=[['ועדה מחוזית','השלמת מסמכים לתכנית "שכונת הגפן" עד מחר 12:00'],['רכזת הוועדה','פרוטוקול ישיבה מס׳ 14 לעיון'],['אדריכל חיצוני','בקשה לתיאום פגישה'],['משאבי אנוש','ברוכים הבאים למערכת החדשה']];
+  const rows=(sel,chip)=>'<div class="gm-toolbar">'+(sel?'<button class="gm-ico" type="button" data-t="labelicon" aria-label="תוויות" title="תוויות">🏷️</button>':'')+'</div>'+MAILS.map((m,i)=>'<div class="gm-row'+(sel&&i===0?' sel':'')+'"><input type="checkbox" aria-label="בחירת הודעה" '+(i===0?'data-t="check"':'')+(sel&&i===0?' checked':'')+'><span class="who">'+m[0]+'</span><span class="subj">'+(chip&&i===0?'<span class="gm-chip">דחוף</span>':'')+m[1]+'</span></div>').join('');
+
+  /* --- signature --- */
+  const sig={name:'נועה כהן',role:'רכזת ועדה מקומית',org:'מינהל התכנון · מחוז מרכז',phone:'03-1234567'};
+  const sigHTML=()=>'<div class="nm">'+esc(sig.name)+' | '+esc(sig.role)+'</div><div>'+esc(sig.org)+' | טל׳ '+esc(sig.phone)+'</div><div class="cf">הודעה זו עשויה להכיל מידע חסוי. אם קיבלת אותה בטעות, אנא הודע/י לשולח/ת ומחק/י אותה.</div>';
+  const settings=(inner)=>'<div class="gm-top"><span class="gm-logo"><i></i>Gmail</span><span class="gm-search">חיפוש באימייל</span><span class="gm-icons"><button class="gm-ico" type="button">⚙</button></span></div><div class="gm-body"><div class="gm-side"><button class="gm-compose" type="button">✏️ אימייל חדש</button><ul class="gm-nav"><li>דואר נכנס</li><li>נשלח</li></ul></div><div class="gm-main gm-settings"><h4>הגדרות</h4><div class="gm-tabs"><b>כללי</b><span>תוויות</span><span>דואר נכנס</span><span>חשבונות וייבוא</span><span>מסננים</span></div>'+inner+'</div></div>';
+  const sigRow=(inner)=>'<div class="gm-srow"><b>שפה:</b><span class="dim">עברית</span></div><div class="gm-srow"><b>חתימה:<br><span class="dim" style="font-weight:400">(תופיע בסוף כל ההודעות היוצאות.)</span></b><div>'+inner+'</div></div>';
+  sim({box:'gmSig',cnt:'sCnt',txt:'sTxt',dots:'sDots',hint:'sHint',
+    steps:[
+      {task:'לחצו על סמל ההגדרות ⚙',sub:'בפינה השמאלית העליונה של המסך',target:'gear',hint:'חפשו את גלגל השיניים למעלה.',
+       view:()=>top()+'<div class="gm-body">'+side()+inbox(rows())+'</div>'},
+      {task:'לחצו על „הצגת כל ההגדרות"',sub:'ההגדרות המהירות לא מספיקות. צריך את כל ההגדרות.',target:'all',hint:'הכפתור נמצא בחלונית שנפתחה.',
+       view:()=>top()+'<div class="gm-body">'+side()+inbox(rows())+'</div><div class="gm-quick"><h5>הגדרות מהירות</h5><button class="gm-btn" type="button" data-t="all" style="width:100%">הצגת כל ההגדרות</button><p style="font-size:12px;color:#777;margin:10px 0 0">צפיפות · עיצוב · תיבת דואר</p></div>'},
+      {task:'גללנו לקטע „חתימה". לחצו „יצירת חתימה חדשה"',target:'newsig',hint:'הכפתור נמצא בשורת „חתימה".',
+       view:()=>settings(sigRow('<div class="dim" style="margin-bottom:6px">אין חתימות</div><button class="gm-btn" type="button" data-t="newsig">+ יצירת חתימה חדשה</button>'))},
+      {task:'תנו לחתימה שם ולחצו „יצירה"',sub:'השם רק בשבילכם, למשל „חתימה ארגונית"',target:'create',hint:'כתבו שם ולחצו על הכפתור הכחול.',
+       view:()=>settings(sigRow('<div class="dim">אין חתימות</div>'))+'<div class="gm-veil"><div class="gm-dialog"><h5>השם של החתימה החדשה</h5><input id="sigName" value="חתימה ארגונית" aria-label="שם החתימה"><div class="acts"><button class="gm-btn solid" type="button" data-t="create">יצירה</button><button class="gm-btn" type="button" style="border:0">ביטול</button></div></div></div>'},
+      {task:'מלאו את הפרטים שלכם, ואז „הדבקה לחתימה"',sub:'רואים את החתימה נבנית בתיבה',target:'paste',hint:'מלאו פרטים ולחצו „הדבקה לחתימה".',
+       view:()=>settings(sigRow('<div class="sigform free"><label>שם<input data-k="name" value="'+esc(sig.name)+'"></label><label>תפקיד<input data-k="role" value="'+esc(sig.role)+'"></label><label>יחידה<input data-k="org" value="'+esc(sig.org)+'"></label><label>טלפון<input data-k="phone" value="'+esc(sig.phone)+'"></label></div><div class="gm-editor" id="ed">'+sigHTML()+'</div><button class="gm-btn solid" type="button" data-t="paste" style="margin-top:8px">הדבקה לחתימה ✓</button>')),
+       bind:()=>{document.querySelectorAll('#gmSig .sigform input').forEach(inp=>inp.addEventListener('input',()=>{sig[inp.dataset.k]=inp.value;$('ed').innerHTML=sigHTML();}));}},
+      {task:'⚠ השלב שרבים שוכחים: בחרו את החתימה ב„ברירות מחדל לחתימה"',sub:'בלי זה, החתימה לא תופיע במיילים חדשים',target:'none',hint:'בחרו „חתימה ארגונית" ברשימה.',
+       view:()=>settings(sigRow('<div class="gm-editor">'+sigHTML()+'</div><div style="margin-top:10px;font-weight:700">ברירות מחדל לחתימה</div><label class="free" style="font-size:12.5px;display:grid;gap:3px;margin-top:4px">לשימוש בהודעות אימייל חדשות<select class="gm-select pulse" id="defSel"><option>ללא חתימה</option><option>חתימה ארגונית</option></select></label>')),
+       bind:(next)=>{$('defSel').addEventListener('change',e=>{ if(e.target.value==='חתימה ארגונית'){ setTimeout(next,350);} });}},
+      {task:'אחרון! לחצו „שמירת השינויים" בתחתית הדף',target:'save',hint:'הכפתור בתחתית דף ההגדרות.',
+       view:()=>settings(sigRow('<div class="gm-editor">'+sigHTML()+'</div><div style="margin-top:8px;font-size:12.5px">לשימוש בהודעות אימייל חדשות: <b>חתימה ארגונית</b></div>')+'<div style="display:flex;gap:8px;justify-content:center;padding:14px 0 4px"><button class="gm-btn square" type="button" data-t="save">שמירת השינויים</button><button class="gm-btn square" type="button">ביטול</button></div>')}
+    ],
+    finish:()=>{
+      $('gmSig').innerHTML='<div class="done-panel"><div class="big">✅</div><h3 style="font-size:24px;color:var(--green)">החתימה נשמרה!</h3><p style="margin:6px auto">ככה היא תיראה בכל מייל חדש:</p><div class="mini-mail"><div class="h">הודעה חדשה</div><div class="b">שלום רב,<br>מצורף הפרוטוקול מהישיבה האחרונה.<div class="sig">'+sigHTML()+'</div></div></div></div>';
+      $('sHint').textContent=''; $('sTxt').innerHTML='כל הכבוד! עברו לשלב הבא ←'; burst(60);
+    }});
+
+  /* --- labels --- */
+  const made=[]; const want=[['דחוף','#D9481A'],['לטיפול','#F7B923'],['לעיון','#58B1DC']];
+  const lblDialog=(name)=>'<div class="gm-veil"><div class="gm-dialog"><h5>תווית חדשה</h5><div style="font-size:13px;margin-bottom:6px">מה יהיה השם של התווית החדשה:</div><input id="lblIn" placeholder="'+name+'" aria-label="שם התווית"><div class="acts"><button class="gm-btn solid" type="button" id="lblOk">אישור</button><button class="gm-btn" type="button" style="border:0">ביטול</button></div><div id="lblErr" style="color:#D9481A;font-size:13px;min-height:18px;margin-top:6px"></div></div></div>';
+  function labelSteps(){
+    const st=[];
+    want.forEach((w,i)=>{
+      st.push({task:(i===0?'לחצו על + ליד „תוויות"':'שוב +, הפעם לתווית „'+w[0]+'"'),sub:i===0?'בצד ימין, מתחת לתיקיות':'',target:'plus',hint:'הפלוס נמצא ליד המילה „תוויות".',
+        view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows())+'</div>'});
+      st.push({task:'הקלידו „'+w[0]+'" ולחצו „אישור"',target:null,hint:'',
+        view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows())+'</div>'+lblDialog(w[0]),
+        bind:(next)=>{ const inp=$('lblIn'); inp.focus();
+          const ok=()=>{ if(inp.value.trim()===w[0]){ made.push(w); next(); } else { $('lblErr').textContent='כתבו בדיוק: '+w[0]; inp.classList.add('shake'); setTimeout(()=>inp.classList.remove('shake'),400);} };
+          $('lblOk').onclick=ok; inp.addEventListener('keydown',e=>{if(e.key==='Enter')ok();}); }});
+    });
+    st.push({task:'עכשיו מסמנים: סמנו את ההודעה הראשונה בתיבת הסימון',sub:'„השלמת מסמכים… עד מחר" צריכה תווית דחוף',target:'check',hint:'לחצו על הריבוע בתחילת השורה הראשונה.',
+      view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows())+'</div>'});
+    st.push({task:'לחצו על סמל התוויות 🏷️ ובחרו „דחוף"',target:null,hint:'',
+      view:()=>top()+'<div class="gm-body">'+side(made)+inbox(rows(true))+'</div>',
+      bind:(next)=>{ const box=$('gmLbl'); const ic=box.querySelector('[data-t="labelicon"]'); ic.classList.add('pulse');
+        ic.onclick=(e)=>{ e.stopPropagation(); if(box.querySelector('.gm-menu'))return; const r=ic.getBoundingClientRect(), b=box.getBoundingClientRect();
+          const m=document.createElement('div'); m.className='gm-menu'; m.style.top=(r.bottom-b.top+4)+'px'; m.style.left=Math.max(8,r.left-b.left)+'px';
+          m.innerHTML=want.map(w=>'<button type="button" data-l="'+w[0]+'"><i style="width:12px;height:12px;border-radius:3px;display:block;background:'+w[1]+'"></i>'+w[0]+'</button>').join('');
+          box.appendChild(m);
+          m.onclick=(ev)=>{ ev.stopPropagation(); const l=ev.target.closest('[data-l]'); if(!l)return; if(l.dataset.l==='דחוף'){ next(); } else { $('lHint').textContent='הודעה עם מועד של מחר צריכה „דחוף". נסו שוב.'; } };
+        }; }});
+    return st;
+  }
+  // remove the label steps' own wrong-click handling for steps without target
+  sim({box:'gmLbl',cnt:'lCnt',txt:'lTxt',dots:'lDots',hint:'lHint',steps:labelSteps(),
+    finish:()=>{
+      $('gmLbl').innerHTML=top()+'<div class="gm-body">'+side(made)+inbox(rows(false,true))+'</div><div class="gm-toast">התווית „דחוף" נוספה לשיחה</div>';
+      $('lTxt').innerHTML='מעולה! יש לכם 3 תוויות, וההודעה הדחופה מסומנת. ←'; $('lHint').textContent=''; burst(60);
+    }});
+
+  /* ---------- sort game ---------- */
+  const items=[
+    {id:'m1',from:'ועדה מחוזית',s:'השלמת מסמכים עד מחר ב-12:00',bin:'urgent',why:'מועד קרוב מאוד = דחוף.'},
+    {id:'m2',from:'רכזת הוועדה',s:'פרוטוקול ישיבה מס׳ 14 לידיעתך',bin:'read',why:'„לידיעתך" = קוראים, בלי פעולה.'},
+    {id:'m3',from:'אדריכל חיצוני',s:'בקשה לתיאום פגישה בשבועיים הקרובים',bin:'todo',why:'צריך לטפל, אבל יש זמן.'},
+    {id:'m4',from:'לשכת המנהל',s:'דרוש אישור חתום עוד היום',bin:'urgent',why:'„עוד היום" = דחוף.'},
+    {id:'m5',from:'דסק מחשוב',s:'עדכון: גרסה חדשה בשבוע הבא',bin:'read',why:'עדכון לידיעה.'},
+    {id:'m6',from:'מתכננת מחוזית',s:'חוות דעת לקראת הישיבה בחודש הבא',bin:'todo',why:'יש משימה, המועד רחוק.'}
+  ];
+  const msgs=$('msgs'); let selected=null, correct=0;
+  items.forEach(it=>{const b=document.createElement('button');b.type='button';b.className='msg';b.draggable=true;b.id=it.id;
+    b.innerHTML='<span class="from">'+it.from+'</span><span class="s">'+it.s+'</span>';
+    b.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',it.id));
+    b.addEventListener('click',()=>{document.querySelectorAll('.msg').forEach(m=>m.classList.remove('sel'));selected=it.id;b.classList.add('sel')});
+    msgs.appendChild(b);});
+  const sortFb=$('sortFb');
+  function place(id,bin){ const it=items.find(x=>x.id===id); if(!it)return; sortFb.className='feedback show';
+    const binEl=document.querySelector('.bin[data-bin="'+bin+'"]');
+    if(it.bin===bin){ correct++; $(id).classList.add('placed'); const sp=document.createElement('span');sp.textContent=it.s; binEl.querySelector('.in').appendChild(sp);
+      binEl.classList.remove('hit'); void binEl.offsetWidth; binEl.classList.add('hit'); sortFb.classList.add('ok'); sortFb.textContent='✓ נכון! '+it.why;
+      if(correct===items.length){ burst(90); }
+    } else { sortFb.classList.add('no'); sortFb.textContent='כמעט. '+it.why+' נסו תווית אחרת.'; binEl.classList.add('shake'); setTimeout(()=>binEl.classList.remove('shake'),400); }
+    selected=null; document.querySelectorAll('.msg').forEach(m=>m.classList.remove('sel'));
+    $('sortScore').textContent= correct===items.length?'🎉 הכול ממוין! תיבה מסודרת = פחות לחץ.':'מוינו '+correct+' מתוך '+items.length; }
+  document.querySelectorAll('.bin').forEach(bin=>{
+    bin.addEventListener('dragover',e=>{e.preventDefault();bin.classList.add('over')});
+    bin.addEventListener('dragleave',()=>bin.classList.remove('over'));
+    bin.addEventListener('drop',e=>{e.preventDefault();bin.classList.remove('over');place(e.dataTransfer.getData('text/plain'),bin.dataset.bin)});
+    bin.addEventListener('click',()=>{ if(selected) place(selected,bin.dataset.bin); else {sortFb.className='feedback show hint';sortFb.textContent='קודם בחרו הודעה, ואז לחצו על תווית.';} });
+  });
+  $('sortScore').textContent='מוינו 0 מתוך '+items.length;
+
+  /* ---------- finish ---------- */
+  const cbs=[...document.querySelectorAll('.checklist input')];
+  cbs.forEach(c=>c.addEventListener('change',()=>{ if(cbs.every(x=>x.checked)){ $('beforeDone').hidden=true; $('success').classList.add('show'); $('nav').hidden=true; done.add(cur); [...stepper.children].forEach(li=>li.classList.add('done')); burst(160); }}));
+
+  /* ---------- confetti ---------- */
+  const cv=$('confetti'), cx=cv.getContext('2d'); let parts=[], raf=null;
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function burst(n){ if(reduce)return; cv.width=innerWidth; cv.height=innerHeight; const cols=['#F7B923','#D9481A','#58B1DC','#3B7A31','#B3C860','#0068BD'];
+    for(let i=0;i<n;i++)parts.push({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,r:Math.random()*6+4,c:cols[i%cols.length],a:Math.random()*6,life:0});
+    if(!raf)tick(); }
+  function tick(){ cx.clearRect(0,0,cv.width,cv.height); parts.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;p.life++;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);cx.restore();});
+    parts=parts.filter(p=>p.y<cv.height+20&&p.life<220); raf=parts.length?requestAnimationFrame(tick):(cx.clearRect(0,0,cv.width,cv.height),null); }
+
+  go(0);
+})();
+</script>
+
+</body>
+</html>
